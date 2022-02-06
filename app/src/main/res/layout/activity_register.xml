@@ -11,6 +11,7 @@
         android:id="@+id/registerMail"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:autofillHints="@string/prompt_email"
         android:hint="@string/prompt_email"
         android:inputType="textEmailAddress"
@@ -19,8 +20,7 @@
         app:circularflow_radiusInDP="32dp"
         app:layout_constraintEnd_toEndOf="@+id/registerName"
         app:layout_constraintStart_toStartOf="@+id/registerName"
-        app:layout_constraintTop_toBottomOf="@+id/registerName"
-        android:layout_marginTop="8dp"/>
+        app:layout_constraintTop_toBottomOf="@+id/registerName" />
 
     <EditText
         android:id="@+id/registerPassword"
@@ -44,6 +44,7 @@
         android:id="@+id/registerName"
         android:layout_width="210dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="150dp"
         android:autofillHints=""
         android:ems="10"
         android:hint="@string/name"
@@ -51,14 +52,13 @@
         android:minHeight="48dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="200dp"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:layout_marginTop="8dp"
         android:id="@+id/registerPasswordAgain"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:autofillHints="@string/prompt_password"
         android:hint="@string/prompt_password_again"
         android:imeActionLabel="@string/action_sign_in"
@@ -72,15 +72,34 @@
         app:layout_constraintTop_toBottomOf="@+id/registerPassword" />
 
     <Button
-        android:layout_marginTop="16dp"
         android:id="@+id/registerButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="start"
+        android:layout_marginTop="16dp"
         android:text="@string/action_sign_in"
         app:layout_constraintEnd_toEndOf="@+id/registerPasswordAgain"
         app:layout_constraintStart_toStartOf="@+id/registerPasswordAgain"
         app:layout_constraintTop_toBottomOf="@+id/registerPasswordAgain" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="If you have already account "
+        app:layout_constraintStart_toStartOf="@+id/registerPasswordAgain"
+        app:layout_constraintTop_toBottomOf="@+id/registerButton" />
+
+    <TextView
+        android:id="@+id/goToLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="login here"
+        android:textColor="#3F51B5"
+        android:textStyle="bold|italic"
+        app:layout_constraintBottom_toBottomOf="@+id/textView"
+        app:layout_constraintStart_toEndOf="@+id/textView" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

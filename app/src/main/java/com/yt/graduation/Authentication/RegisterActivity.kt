@@ -11,9 +11,10 @@ import com.yt.graduation.MainActivity
 import com.yt.graduation.databinding.ActivityRegisterBinding
 
 private lateinit var binding: ActivityRegisterBinding
+
 class RegisterActivity : AppCompatActivity() {
 
-    private lateinit var  auth: FirebaseAuth
+    private lateinit var auth: FirebaseAuth
     private lateinit var email: String
     private lateinit var name: String
     private lateinit var password2: String
@@ -25,34 +26,38 @@ class RegisterActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-        auth= FirebaseAuth.getInstance()
+        auth = FirebaseAuth.getInstance()
 
-        binding.registerButton.setOnClickListener(){
+        binding.registerButton.setOnClickListener() {
             register(view)
+        }
+        binding.goToLogin.setOnClickListener() {
+            goToLogin(view)
         }
 
     }
-    fun register(view: View){
+
+    fun register(view: View) {
         binding.apply {
-            email= registerMail.text.toString()
-            password=registerPassword.text.toString()
-            name= registerName.text.toString()
-            password2=registerPasswordAgain.text.toString()
+            email = registerMail.text.toString()
+            password = registerPassword.text.toString()
+            name = registerName.text.toString()
+            password2 = registerPasswordAgain.text.toString()
         }
 
-        auth.createUserWithEmailAndPassword(email,password).addOnCompleteListener { task ->
-            if(task.isSuccessful){
-                val intent= Intent(this, MainActivity::class.java)
+        auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
                 finish()
             }
         }.addOnFailureListener { exception ->
-            Toast.makeText(applicationContext,exception.localizedMessage,Toast.LENGTH_LONG).show()
+            Toast.makeText(applicationContext, exception.localizedMessage, Toast.LENGTH_LONG).show()
         }
     }
 
-    fun goToLogin(view: View){
-        val intent= Intent(this,LoginActivity::class.java)
+    fun goToLogin(view: View) {
+        val intent = Intent(this, LoginActivity::class.java)
         startActivity(intent)
     }
 }

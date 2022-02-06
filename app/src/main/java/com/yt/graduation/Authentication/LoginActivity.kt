@@ -16,7 +16,7 @@ private lateinit var password: String
 
 class LoginActivity : AppCompatActivity() {
 
-    private lateinit var  auth: FirebaseAuth
+    private lateinit var auth: FirebaseAuth
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,34 +25,38 @@ class LoginActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-        auth= FirebaseAuth.getInstance()
+        auth = FirebaseAuth.getInstance()
 
-        binding.loginButton.setOnClickListener(){
+        binding.loginButton.setOnClickListener() {
             login(view)
+        }
+        binding.goToRegister.setOnClickListener() {
+            goToRegister(view)
         }
 
 
     }
-    fun login(view: View){
+
+    fun login(view: View) {
         binding.apply {
-            email= loginMail.text.toString()
-            password= loginPassword.text.toString()
+            email = loginMail.text.toString()
+            password = loginPassword.text.toString()
 
         }
 
-        auth.signInWithEmailAndPassword(email,password).addOnCompleteListener { task ->
-            if(task.isSuccessful){
-                val intent= Intent(this, MainActivity::class.java)
+        auth.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
                 finish()
             }
         }.addOnFailureListener { exception ->
-            Toast.makeText(applicationContext,exception.localizedMessage, Toast.LENGTH_LONG).show()
+            Toast.makeText(applicationContext, exception.localizedMessage, Toast.LENGTH_LONG).show()
         }
     }
 
-    fun goToRegister(view: View){
-        val intent= Intent(this,RegisterActivity::class.java)
+    fun goToRegister(view: View) {
+        val intent = Intent(this, RegisterActivity::class.java)
         startActivity(intent)
     }
 }
