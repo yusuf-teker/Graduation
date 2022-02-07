@@ -1,10 +1,13 @@
 package com.yt.graduation.Authentication
 
+import android.app.ProgressDialog
 import android.content.Intent
+import android.opengl.Visibility
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.EditText
+import android.view.View.GONE
+import android.widget.ProgressBar
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.yt.graduation.MainActivity
@@ -45,19 +48,30 @@ class RegisterActivity : AppCompatActivity() {
             password2 = registerPasswordAgain.text.toString()
         }
 
-        auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent)
-                finish()
+        if (validateRegisteration(email,password,password2)){
+            binding.registerProgressBar.visibility= View.VISIBLE
+            auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val intent = Intent(this, MainActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                }
+            }.addOnFailureListener { exception ->
+                Toast.makeText(applicationContext, exception.localizedMessage, Toast.LENGTH_LONG).show()
             }
-        }.addOnFailureListener { exception ->
-            Toast.makeText(applicationContext, exception.localizedMessage, Toast.LENGTH_LONG).show()
+            binding.registerProgressBar.visibility= View.GONE
+        }else{
+            Toast.makeText(applicationContext, "Please check your information !", Toast.LENGTH_LONG).show()
         }
+
     }
 
     fun goToLogin(view: View) {
         val intent = Intent(this, LoginActivity::class.java)
         startActivity(intent)
+    }
+
+    fun validateRegisteration(email:String, passw1:String,passw2:String):Boolean{
+        return email.takeLast(11)=="@itu.edu.tr" && passw1.isNotEmpty() && passw1.equals(passw2)
     }
 }

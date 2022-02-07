@@ -12,6 +12,7 @@
         <activity
 
             android:name=".Authentication.RegisterActivity"
+            android:label="Registeration"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,8 +24,7 @@
         <activity
             android:name=".Authentication.LoginActivity"
             android:exported="false"
-            android:label="@string/title_activity_login"
-            android:theme="@style/Theme.Graduation.NoActionBar" />
+            android:label="@string/title_activity_login" />
 
         <activity
             android:name=".MainActivity"

@@ -5,10 +5,13 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.lifecycle.lifecycleScope
 import com.google.firebase.auth.FirebaseAuth
 import com.yt.graduation.MainActivity
 import com.yt.graduation.databinding.ActivityLoginBinding
 import com.yt.graduation.databinding.ActivityRegisterBinding
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 private lateinit var binding: ActivityLoginBinding
 private lateinit var email: String
@@ -43,6 +46,12 @@ class LoginActivity : AppCompatActivity() {
             password = loginPassword.text.toString()
 
         }
+        //this part will be changed
+        binding.loginProgressBar.visibility= View.VISIBLE
+        lifecycleScope.launch {
+            delay(4000) // debounce effect
+            binding.loginProgressBar.visibility= View.GONE
+        }/////////////////////////////////////////////////
 
         auth.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
             if (task.isSuccessful) {
@@ -53,6 +62,7 @@ class LoginActivity : AppCompatActivity() {
         }.addOnFailureListener { exception ->
             Toast.makeText(applicationContext, exception.localizedMessage, Toast.LENGTH_LONG).show()
         }
+
     }
 
     fun goToRegister(view: View) {
