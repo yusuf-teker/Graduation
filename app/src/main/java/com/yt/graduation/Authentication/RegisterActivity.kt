@@ -30,6 +30,7 @@ class RegisterActivity : AppCompatActivity() {
         setContentView(view)
 
         auth = FirebaseAuth.getInstance()
+        if(auth.currentUser!=null) goToMainActivity()
 
         binding.registerButton.setOnClickListener() {
             register(view)
@@ -38,6 +39,11 @@ class RegisterActivity : AppCompatActivity() {
             goToLogin(view)
         }
 
+
+    }
+
+    private fun goToMainActivity() {
+        startActivity(Intent(this, MainActivity::class.java))
     }
 
     fun register(view: View) {
