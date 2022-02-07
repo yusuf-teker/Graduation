@@ -5,12 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import android.widget.Toast
-import android.widget.Toolbar
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
 import com.yt.graduation.Authentication.LoginActivity
 import com.yt.graduation.databinding.ActivityMainBinding
 
@@ -30,14 +26,7 @@ class MainActivity : AppCompatActivity() {
 
 
         auth = FirebaseAuth.getInstance()
-        if ( auth.currentUser != null ){
-            val database = Firebase.database
-            val myRef = database.getReference("message")
 
-            myRef.setValue("Hello, Worl2gd!")
-
-            myRef.setValue("Hello, Worl2d3!")
-        }
 
 
 

@@ -13,12 +13,13 @@ import com.yt.graduation.databinding.ActivityRegisterBinding
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
+
 private lateinit var binding: ActivityLoginBinding
-private lateinit var email: String
-private lateinit var password: String
 
 class LoginActivity : AppCompatActivity() {
 
+    private lateinit var email: String
+    private lateinit var password: String
     private lateinit var auth: FirebaseAuth
 
 

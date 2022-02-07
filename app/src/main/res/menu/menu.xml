@@ -7,4 +7,9 @@
         android:icon="@drawable/ic_action_sign_out"
         android:title="Sign Out"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/actionSettings"
+        android:icon="@drawable/ic_action_settings"
+        android:title="Settings"
+        app:showAsAction="never" />
 </menu>

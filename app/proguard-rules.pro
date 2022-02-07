@@ -7,3 +7,5 @@
     -keepclassmembers class com.yt.models.** {
       *;
     }
+
+    -keep class androidx.appcompat.widget.** { *; }
