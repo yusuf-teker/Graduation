@@ -9,6 +9,7 @@ import android.view.View
 import android.view.View.GONE
 import android.widget.ProgressBar
 import android.widget.Toast
+import androidx.lifecycle.lifecycleScope
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
@@ -17,6 +18,8 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.yt.graduation.MainActivity
 import com.yt.graduation.databinding.ActivityRegisterBinding
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 private lateinit var binding: ActivityRegisterBinding
 
@@ -60,9 +63,12 @@ class RegisterActivity : AppCompatActivity() {
             name = registerName.text.toString()
             password2 = registerPasswordAgain.text.toString()
         }
-
+        binding.registerProgressBar.visibility= View.VISIBLE
+        lifecycleScope.launch {
+            delay(4000) // debounce effect
+            binding.registerProgressBar.visibility= View.GONE
+        }/////////////////////////////////////////////////
         if (validateRegisteration(email,password,password2)){
-            binding.registerProgressBar.visibility= View.VISIBLE
             auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     addUserToDatabase(name, password,email) //Go TO MainActivity if data added successfully
@@ -70,11 +76,11 @@ class RegisterActivity : AppCompatActivity() {
             }.addOnFailureListener { exception ->
                 Toast.makeText(applicationContext, exception.localizedMessage, Toast.LENGTH_LONG).show()
             }
-            binding.registerProgressBar.visibility= View.GONE
+
         }else{
             Toast.makeText(applicationContext, "Please check your information !", Toast.LENGTH_LONG).show()
         }
-
+        binding.registerProgressBar.visibility= View.GONE
     }
 
     private fun addUserToDatabase(name: String, password: String, email: String) {
