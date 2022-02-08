@@ -64,10 +64,6 @@ class RegisterActivity : AppCompatActivity() {
             password2 = registerPasswordAgain.text.toString()
         }
         binding.registerProgressBar.visibility= View.VISIBLE
-        lifecycleScope.launch {
-            delay(4000) // debounce effect
-            binding.registerProgressBar.visibility= View.GONE
-        }/////////////////////////////////////////////////
         if (validateRegisteration(email,password,password2)){
             auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
                 if (task.isSuccessful) {
@@ -80,7 +76,7 @@ class RegisterActivity : AppCompatActivity() {
         }else{
             Toast.makeText(applicationContext, "Please check your information !", Toast.LENGTH_LONG).show()
         }
-        binding.registerProgressBar.visibility= View.GONE
+        binding.registerProgressBar.visibility = GONE
     }
 
     private fun addUserToDatabase(name: String, password: String, email: String) {
@@ -108,6 +104,11 @@ class RegisterActivity : AppCompatActivity() {
 
     fun validateRegisteration(email:String, passw1:String,passw2:String):Boolean{
         return email.takeLast(11)=="@itu.edu.tr" && passw1.isNotEmpty() && passw1.equals(passw2)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        if(auth.currentUser!=null) goToMainActivity()
     }
 }
 

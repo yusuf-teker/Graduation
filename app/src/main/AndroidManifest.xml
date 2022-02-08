@@ -16,7 +16,9 @@
         <activity
             android:name=".Settings.SettingsActivity"
             android:parentActivityName=".MainActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:label="User Settings"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Authentication.RegisterActivity"
             android:exported="true"

@@ -1,5 +1,6 @@
 package com.yt.graduation.Settings
 
+
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -9,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
+import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
@@ -18,7 +20,6 @@ import com.google.firebase.storage.StorageReference
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
 import com.yt.graduation.Authentication.LoginActivity
-import com.yt.graduation.MainActivity
 import com.yt.graduation.databinding.ActivitySettingsBinding
 import java.util.*
 import kotlin.collections.HashMap
@@ -30,7 +31,6 @@ class SettingsActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
     private lateinit var database: FirebaseDatabase
-    private var SELECT_PICTURE = 200
     private var imageUri: Uri? = null // The assignment is to be held on ResultActivity
     private lateinit var storageRef : StorageReference
     private lateinit var dbRefUser: DatabaseReference
@@ -41,6 +41,8 @@ class SettingsActivity : AppCompatActivity() {
         binding = ActivitySettingsBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+        setSupportActionBar( binding.toolBar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         auth = FirebaseAuth.getInstance()
         storageRef = FirebaseStorage.getInstance().reference
@@ -61,7 +63,9 @@ class SettingsActivity : AppCompatActivity() {
                     val user_image = dataSnapshot.child("image").value.toString() //User -> userId -> image
 
                     binding.settingsUserName.setText(user_name)
-                    binding.userImage.setImageURI(user_image.toUri())
+                    /*
+                    if(user_image != "default") {
+                    }*/
                 }
 
                 override fun onCancelled(databaseError: DatabaseError) {
@@ -94,11 +98,13 @@ class SettingsActivity : AppCompatActivity() {
             // start picker to get image for cropping and then use the image in cropping activity
             CropImage.activity()
                 .setGuidelines(CropImageView.Guidelines.ON)
-                .start(this);
+                .start(this)
 
-            // start cropping activity for pre-acquired image saved on the device
+            /*start cropping activity for pre-acquired image saved on the device
             CropImage.activity(imageUri)
-                .start(this);
+                .start(this)
+
+             */
 
         }
 
@@ -112,23 +118,17 @@ class SettingsActivity : AppCompatActivity() {
 
                 //Providing image uri to add to the database
                 val uploadTask = userImageRef.putFile(imageUri!!)
-                uploadTask.addOnCompleteListener{ task ->
-                    if (task.isSuccessful){
-                        var downloadUri= imageUri
-                        val urlTask = uploadTask.continueWithTask { task ->
-                            if (!task.isSuccessful) {
-                                task.exception?.let {
-                                    throw it
-                                }
-                            }
-                            userImageRef.downloadUrl
-                        }.addOnCompleteListener { task ->
-                            if (task.isSuccessful) {
-                                downloadUri = task.result
-                            } else {
 
-                            }
+                val urlTask = uploadTask.continueWithTask { task ->
+                    if (!task.isSuccessful) {
+                        task.exception?.let {
+                            throw it
                         }
+                    }
+                    userImageRef.downloadUrl
+                }.addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        val downloadUri = task.result
                         val userUpdateMap = HashMap<String,Any>()
                         userUpdateMap["name"] = username
                         userUpdateMap["image"] = downloadUri.toString()
@@ -138,16 +138,14 @@ class SettingsActivity : AppCompatActivity() {
                             if (task.isSuccessful){
                                 Toast.makeText(applicationContext, "Update is successful", Toast.LENGTH_LONG).show()
 
-
                             }else Toast.makeText(applicationContext, "Update is not successful", Toast.LENGTH_LONG).show()
                         }
+                    } else {
+                        // Handle failures
+                        // ...
                     }
-                    else{
-                        Toast.makeText(applicationContext, "Storage Upload Failure", Toast.LENGTH_LONG).show()
-                    }
-                }.addOnFailureListener{
-
                 }
+
             }
         }
 
@@ -168,6 +166,10 @@ class SettingsActivity : AppCompatActivity() {
     fun goToLogin() {
         val intent = Intent(this, LoginActivity::class.java)
         startActivity(intent)
+    }
+
+    override fun onStart() {
+        super.onStart()
     }
 
 }
