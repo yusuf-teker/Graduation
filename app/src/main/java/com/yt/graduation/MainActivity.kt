@@ -8,6 +8,7 @@ import android.view.MenuItem
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.yt.graduation.Authentication.LoginActivity
+import com.yt.graduation.Settings.SettingsActivity
 import com.yt.graduation.databinding.ActivityMainBinding
 
 
@@ -46,10 +47,17 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(applicationContext, "Session has been closed",Toast.LENGTH_LONG).show()
             goToLogin()
         }
+        if (item.itemId == R.id.actionSettings){
+            goToSettings()
+        }
         return true
     }
     private fun goToLogin() {
         val intent = Intent(this, LoginActivity::class.java)
+        startActivity(intent)
+    }
+    private fun goToSettings() {
+        val intent = Intent(this, SettingsActivity::class.java)
         startActivity(intent)
     }
 }
