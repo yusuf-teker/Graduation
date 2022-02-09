@@ -76,6 +76,7 @@ class SettingsActivity : AppCompatActivity() {
         }else goToLogin()
 
         binding.signOutButton.setOnClickListener(){
+            auth.signOut()
             goToLogin()
         }
 

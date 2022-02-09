@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.yt.graduation">
+
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="true"
@@ -14,18 +15,21 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Graduation">
         <activity
+            android:name=".Account.AccountActivity"
+            android:exported="false" />
+        <activity
             android:name=".Settings.SettingsActivity"
-            android:parentActivityName=".MainActivity"
+            android:configChanges="orientation"
             android:exported="false"
             android:label="User Settings"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait"/>
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Authentication.RegisterActivity"
+            android:configChanges="orientation"
             android:exported="true"
             android:label="Registeration"
-            android:configChanges="orientation"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -35,20 +39,21 @@
         </activity>
         <activity
             android:name=".Authentication.LoginActivity"
+            android:configChanges="orientation"
             android:exported="false"
             android:label="@string/title_activity_login"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".MainActivity"
+            android:configChanges="orientation"
             android:exported="false"
-            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:configChanges="orientation"
-            android:screenOrientation="portrait"/>
-        <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
-            android:theme="@style/Base.Theme.AppCompat"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/Base.Theme.AppCompat" />
     </application>
 
 </manifest>
