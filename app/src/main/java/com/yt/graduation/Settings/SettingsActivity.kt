@@ -75,6 +75,10 @@ class SettingsActivity : AppCompatActivity() {
             dbRefUser.addValueEventListener(postListener)
         }else goToLogin()
 
+        binding.signOutButton.setOnClickListener(){
+            goToLogin()
+        }
+
         binding.userImage.setOnClickListener() {
             /*
             if(ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)

@@ -70,14 +70,14 @@
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="If you don't have an account "
+            android:text="@string/if_you_don_t_have_an_account"
             app:layout_constraintEnd_toStartOf="@+id/goToLogin" />
 
         <TextView
             android:id="@+id/goToRegister"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="register here"
+            android:text="@string/register_here"
             android:textColor="#3F51B5"
             android:textStyle="bold|italic" />
 

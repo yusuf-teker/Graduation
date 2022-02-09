@@ -4,28 +4,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginBottom="32dp"
     tools:context=".Settings.SettingsActivity">
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:elevation="14dp"
         android:background="@color/purple_200"
-        app:menu="@menu/menu"
-        app:title="User Settings"
+        android:elevation="14dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        app:menu="@menu/menu"
+        app:title="User Settings" />
 
     <ImageView
         android:id="@+id/userImage"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_marginTop="180dp"
+        android:contentDescription="@string/porfile_image"
         android:scaleType="fitXY"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/defaultuser"/>
+        app:srcCompat="@drawable/defaultuser" />
 
 
     <EditText
@@ -50,5 +53,28 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/settingsUserName" />
+
+    <ImageButton
+        android:id="@+id/signOutButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:contentDescription="@string/sign_out"
+        android:minHeight="48dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/settingsUserName"
+        app:srcCompat="@drawable/ic_action_sign_out" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sign_out"
+        android:textColor="@color/red"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/signOutButton"
+        app:layout_constraintEnd_toStartOf="@+id/signOutButton"
+        app:layout_constraintStart_toStartOf="@+id/settingsUserName"
+        app:layout_constraintTop_toTopOf="@+id/signOutButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
