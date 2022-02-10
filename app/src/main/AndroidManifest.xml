@@ -15,8 +15,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Graduation">
         <activity
+            android:name=".Account.AddProductActivity"
+            android:exported="false"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
             android:name=".Account.AccountActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Settings.SettingsActivity"
             android:configChanges="orientation"

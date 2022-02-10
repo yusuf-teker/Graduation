@@ -49,7 +49,6 @@ class SettingsActivity : AppCompatActivity() {
 
 
         if (auth.currentUser != null) {
-            auth = FirebaseAuth.getInstance()
             val userId = auth.currentUser!!.uid
             database = Firebase.database
 

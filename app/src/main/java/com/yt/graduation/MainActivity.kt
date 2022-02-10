@@ -31,12 +31,15 @@ class MainActivity : AppCompatActivity() {
 
         binding.bottomNavigation.setOnNavigationItemSelectedListener { item ->
             when(item.itemId) {
+                /*
                 R.id.actionHomepage -> { //TODO
                     // Respond to navigation item 2 click
                     val navController = findNavController(R.id.fragmentContainerView)
                     //navController.navigate(R.id.action_allProductsFragment_to_detailProductFragment)
                     true
                 }
+
+                 */
                 R.id.actionAccount -> {
                     goToAccount()
                     true

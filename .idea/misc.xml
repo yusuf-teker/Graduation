@@ -5,6 +5,7 @@
       <map>
         <entry key="..\:/Programming/Graduation/app/src/main/res/layout-v28/activity_settings.xml" value="0.25416666666666665" />
         <entry key="..\:/Programming/Graduation/app/src/main/res/layout/activity_account.xml" value="0.264" />
+        <entry key="..\:/Programming/Graduation/app/src/main/res/layout/activity_add_product.xml" value="0.4" />
         <entry key="..\:/Programming/Graduation/app/src/main/res/layout/activity_login.xml" value="0.25416666666666665" />
         <entry key="..\:/Programming/Graduation/app/src/main/res/layout/activity_login2.xml" value="0.2210144927536232" />
         <entry key="..\:/Programming/Graduation/app/src/main/res/layout/activity_main.xml" value="0.264" />
@@ -17,7 +18,9 @@
         <entry key="..\:/Programming/Graduation/app/src/main/res/layout/fragment_on_sale_products.xml" value="0.25416666666666665" />
         <entry key="..\:/Programming/Graduation/app/src/main/res/layout/fragment_scrolling.xml" value="0.25416666666666665" />
         <entry key="..\:/Programming/Graduation/app/src/main/res/layout/list_item_product.xml" value="0.536" />
+        <entry key="..\:/Programming/Graduation/app/src/main/res/layout/list_item_spinner.xml" value="0.1" />
         <entry key="..\:/Programming/Graduation/app/src/main/res/layout/product_detail.xml" value="0.25416666666666665" />
+        <entry key="..\:/Programming/Graduation/app/src/main/res/layout/spinner_item.xml" value="0.1" />
         <entry key="..\:/Programming/Graduation/app/src/main/res/layout/toolbar.xml" value="0.2" />
         <entry key="..\:/Programming/Graduation/app/src/main/res/menu/bottom_menu.xml" value="0.264" />
         <entry key="..\:/Programming/Graduation/app/src/main/res/menu/menu.xml" value="0.4" />
