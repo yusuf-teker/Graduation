@@ -98,6 +98,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:background="@color/primaryColor"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
             android:text="@string/add_product"
             android:textColor="#4E342E"
             app:layout_constraintEnd_toEndOf="parent"

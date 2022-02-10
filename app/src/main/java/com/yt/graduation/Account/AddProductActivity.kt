@@ -1,6 +1,6 @@
 package com.yt.graduation.Account
 
-import android.content.Context
+
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -18,10 +18,9 @@ import com.google.firebase.storage.StorageReference
 import com.yt.graduation.Authentication.LoginActivity
 import com.yt.graduation.MainActivity
 import com.yt.graduation.R
-import com.yt.graduation.databinding.ActivityAccountBinding
 import com.yt.graduation.databinding.ActivityAddProductBinding
-import com.yt.graduation.databinding.ActivityMainBinding
 import java.time.LocalDateTime
+import kotlin.properties.Delegates
 
 private lateinit var binding: ActivityAddProductBinding
 
@@ -32,6 +31,12 @@ class AddProductActivity : AppCompatActivity() {
     private lateinit var storageRef : StorageReference
     private lateinit var dbRef: DatabaseReference
     private lateinit var spinner: Spinner
+
+    private lateinit var productName: String
+    private var productPrice by Delegates.notNull<Int>()
+    private lateinit var productDescription: String
+
+    private lateinit var viewModel: AddProductViewModel
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -64,7 +69,10 @@ class AddProductActivity : AppCompatActivity() {
 
             val product = hashMapOf<String,String>()
             binding.apply {
-                product["product_name"] = productNameEditText.text.toString()
+                productName = productNameEditText.text.toString()
+                productPrice = productPriceEditText.text.toString().toInt()
+                productDescription = productDescriptionEditText.text.toString()
+
                 spinner.onItemSelectedListener = object : //Get selected category from spinner
                     AdapterView.OnItemSelectedListener {
                     override fun onItemSelected(parent: AdapterView<*>,
@@ -76,25 +84,34 @@ class AddProductActivity : AppCompatActivity() {
                         product["product_category"] = categories.last() //Default Category -> Other
                     }
                 }
+                if(validateProduct(productName,productPrice)){
+                    product["product_name"] = productName
+                    product["product_description"] = productDescription
+                    product["product_upload_date"] = LocalDateTime.now().toString()
+                    product["product_state"] = "on_sale"
+                    product["product_image"] = "default"
+                    product["product_price"] = productPrice.toString()
+                    product["product_owner"] = userId
 
-                product["product_description"] = productDescriptionEditText.text.toString()
-                product["product_upload_date"] = LocalDateTime.now().toString()
-                product["product_state"] = "on_sale"
-                product["product_image"] = "default"
-                product["product_price"] = productPriceEditText.text.toString()
-                product["product_owner"] = userId
-            }
+                    val dbRefProducts = dbRef.child("Products") //Create a section "Products"
+                    //Create a unique Key for each product !
+                    val key = dbRefProducts.push().key
+                    if (key != null) {
 
-            val dbRefProducts = dbRef.child("Products") //Create a section "Products"
-            //Create a unique Key for each product !
-            val key = dbRefProducts.push().key
-            if (key != null) {
-
-                dbRefProducts.child(key).setValue(product).addOnCompleteListener{  task ->
-                    if(task.isSuccessful)  goToMain()
+                        dbRefProducts.child(key).setValue(product).addOnCompleteListener{  task ->
+                            if(task.isSuccessful){
+                                Toast.makeText(this@AddProductActivity, "Product Added Successfuly",Toast.LENGTH_LONG )
+                                goToMain()
+                            }
+                        }
+                    }
                 }
+
             }
-        }
+
+
+        } //endOf onClickListener
+
 
 
     }
@@ -106,5 +123,8 @@ class AddProductActivity : AppCompatActivity() {
     fun goToLogin() {
         val intent = Intent(this, LoginActivity::class.java)
         startActivity(intent)
+    }
+    fun validateProduct(productName:String, productPrice: Int): Boolean{
+        return productName.isNotEmpty() && (productPrice in 0..999999)
     }
 }
