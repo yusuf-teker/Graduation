@@ -1,4 +1,4 @@
-package com.yt.graduation.Settings
+package com.yt.graduation.UI.Settings
 
 
 import android.content.Intent
@@ -6,11 +6,10 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.net.toUri
-import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
@@ -19,9 +18,8 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
-import com.yt.graduation.Authentication.LoginActivity
+import com.yt.graduation.UI.Authentication.LoginActivity
 import com.yt.graduation.databinding.ActivitySettingsBinding
-import java.util.*
 import kotlin.collections.HashMap
 
 
@@ -31,10 +29,10 @@ class SettingsActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
     private lateinit var database: FirebaseDatabase
-    private var imageUri: Uri? = null // The assignment is to be held on ResultActivity
+    private var imageUri: Uri = Uri.EMPTY // The assignment is to be held on ResultActivity
     private lateinit var storageRef : StorageReference
     private lateinit var dbRefUser: DatabaseReference
-
+    private val viewModel: SettingsViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,8 +51,8 @@ class SettingsActivity : AppCompatActivity() {
             database = Firebase.database
 
             //Read From Database
-            dbRefUser = database.reference.child("Users").child(userId)
 
+            dbRefUser = database.reference.child("Users").child(userId)
             val postListener = object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     val user_name =
@@ -104,26 +102,21 @@ class SettingsActivity : AppCompatActivity() {
                 .setGuidelines(CropImageView.Guidelines.ON)
                 .start(this)
 
-            /*start cropping activity for pre-acquired image saved on the device
-            CropImage.activity(imageUri)
-                .start(this)
-
-             */
 
         }
 
         /**Update Database*/
         binding.updateButton.setOnClickListener(){
+
             val username= binding.settingsUserName.text.toString()
-            if (username.isNotEmpty() && imageUri != null){ //if there is respone from crop activity imageUri is not null
+            if (username.isNotEmpty()){ //if there is response from crop activity imageUri is not null
+
+
+                // Add User Image To Storage
                 val userId = auth.currentUser!!.uid //get user unique Id
-                //Get Reference (Where data is located in tree)
                 val userImageRef = storageRef.child("profile_images").child(userId+".jpg")
-
-                //Providing image uri to add to the database
-                val uploadTask = userImageRef.putFile(imageUri!!)
-
-                val urlTask = uploadTask.continueWithTask { task ->
+                    //Providing image uri to add to the database //Add Image To Storage
+                val uploadTask = userImageRef.putFile(imageUri).continueWithTask { task ->
                     if (!task.isSuccessful) {
                         task.exception?.let {
                             throw it
@@ -131,6 +124,8 @@ class SettingsActivity : AppCompatActivity() {
                     }
                     userImageRef.downloadUrl
                 }.addOnCompleteListener { task ->
+                    //After put file to storage, if the process is successfull then add this to realtime DB
+
                     if (task.isSuccessful) {
                         val downloadUri = task.result
                         val userUpdateMap = HashMap<String,Any>()
@@ -150,11 +145,15 @@ class SettingsActivity : AppCompatActivity() {
                     }
                 }
 
+
+
+
             }
         }
 
     }
 
+    //Set Image Uri
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) { // Response from another activity
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) { // If response coming from crop activity

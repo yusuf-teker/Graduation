@@ -1,36 +1,30 @@
-package com.yt.graduation.Authentication
+package com.yt.graduation.UI.Authentication
 
-import android.app.ProgressDialog
 import android.content.Intent
-import android.opengl.Visibility
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.view.View.GONE
-import android.widget.ProgressBar
 import android.widget.Toast
-import androidx.lifecycle.lifecycleScope
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.android.gms.tasks.Task
+import androidx.activity.viewModels
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
-import com.yt.graduation.MainActivity
+import com.yt.graduation.UI.Homepage.MainActivity
 import com.yt.graduation.databinding.ActivityRegisterBinding
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import com.yt.graduation.model.User
+
 
 private lateinit var binding: ActivityRegisterBinding
 
 class RegisterActivity : AppCompatActivity() {
 
+    private val viewModel: RegisterViewModel by viewModels()
+
     private lateinit var auth: FirebaseAuth
     private lateinit var database: FirebaseDatabase
-    private lateinit var email: String
-    private lateinit var name: String
-    private lateinit var password2: String
-    private lateinit var password: String
+    val user = User()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,8 +32,9 @@ class RegisterActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
+
         auth = FirebaseAuth.getInstance()
-        if(auth.currentUser!=null) goToMainActivity()
+        if(auth.currentUser!=null) goToMain()
 
         binding.registerButton.setOnClickListener() {
             register(view)
@@ -51,23 +46,19 @@ class RegisterActivity : AppCompatActivity() {
 
     }
 
-    private fun goToMainActivity() {
-        startActivity(Intent(this, MainActivity::class.java))
-    }
 
     fun register(view: View) {
 
         binding.apply {
-            email = registerMail.text.toString()
-            password = registerPassword.text.toString()
-            name = registerName.text.toString()
-            password2 = registerPasswordAgain.text.toString()
+            user.email = registerMail.text.toString()
+            user.name = registerName.text.toString()
+            registerProgressBar.visibility= View.VISIBLE
         }
-        binding.registerProgressBar.visibility= View.VISIBLE
-        if (validateRegisteration(email,password,password2)){
-            auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
+
+        if (viewModel.validateRegisteration(user.name,user.email,binding.registerPassword.text.toString(),binding.registerPasswordAgain.text.toString())){
+            auth.createUserWithEmailAndPassword(user.email, binding.registerPassword.text.toString()).addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    addUserToDatabase(name, password,email) //Go TO MainActivity if data added successfully
+                    addUserToDatabase(user) //Go TO MainActivity if data added successfully
                 }
             }.addOnFailureListener { exception ->
                 Toast.makeText(applicationContext, exception.localizedMessage, Toast.LENGTH_LONG).show()
@@ -79,15 +70,10 @@ class RegisterActivity : AppCompatActivity() {
         binding.registerProgressBar.visibility = GONE
     }
 
-    private fun addUserToDatabase(name: String, password: String, email: String) {
+    private fun addUserToDatabase(user: User) {
         val userId = auth.currentUser!!.uid //Get user unique id
         database = Firebase.database
         val dbRef = database.reference
-
-        val user = hashMapOf<String,String>()
-        user["name"] = name
-        user["image"] = "default"
-
         dbRef.child("Users").child(userId) .setValue(user).addOnCompleteListener{  task ->
             if(task.isSuccessful)  goToMain()
         }
@@ -102,13 +88,11 @@ class RegisterActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    fun validateRegisteration(email:String, passw1:String,passw2:String):Boolean{
-        return email.takeLast(11)=="@itu.edu.tr" && passw1.isNotEmpty() && passw1.equals(passw2)
-    }
+
 
     override fun onStart() {
         super.onStart()
-        if(auth.currentUser!=null) goToMainActivity()
+        if(auth.currentUser!=null) goToMain()
     }
 }
 

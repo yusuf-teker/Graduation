@@ -1,15 +1,13 @@
-package com.yt.graduation.Account
+package com.yt.graduation.UI.Account
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.TableLayout
-import androidx.navigation.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
-import com.yt.graduation.MainActivity
 import com.yt.graduation.R
 import com.yt.graduation.UI.Adapters.AccountFragmentAdapter
+import com.yt.graduation.UI.Homepage.MainActivity
 import com.yt.graduation.databinding.ActivityAccountBinding
 import com.yt.graduation.databinding.ActivitySettingsBinding
 

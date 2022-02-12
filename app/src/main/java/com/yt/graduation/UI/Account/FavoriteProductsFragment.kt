@@ -1,4 +1,4 @@
-package com.yt.graduation.UI
+package com.yt.graduation.UI.Account
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import com.yt.graduation.R
 
 
-class DetailProductFragment : Fragment() {
+class FavoriteProductsFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,7 +20,7 @@ class DetailProductFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_detail_product, container, false)
+        return inflater.inflate(R.layout.fragment_favorite_products, container, false)
     }
 
 

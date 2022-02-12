@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#90CAF9"
-    tools:context=".Account.AddProductActivity">
+    tools:context=".UI.Account.AddProductActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -31,7 +31,7 @@
             android:layout_margin="24dp"
             android:layout_marginTop="16dp"
             android:autofillHints=""
-            android:background="@color/gray"
+            android:background="@color/primaryColor"
             android:hint="@string/product_name"
             android:inputType="textPersonName"
             android:minHeight="48dp"
@@ -46,7 +46,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:background="@color/gray"
+            android:background="@color/primaryColor"
             android:minHeight="48dp"
             android:padding="8dp"
             android:scrollbarSize="4dp"

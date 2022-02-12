@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/allProductsFragment"
-        android:name="com.yt.graduation.UI.AllProductsFragment"
+        android:name="com.yt.graduation.UI.Homepage.AllProductsFragment"
         android:label="fragment_all_products"
         tools:layout="@layout/fragment_all_products" >
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/detailProductFragment"
-        android:name="com.yt.graduation.UI.DetailProductFragment"
+        android:name="com.yt.graduation.UI.Homepage.DetailProductFragment"
         android:label="fragment_detail_product"
         tools:layout="@layout/fragment_detail_product" />
 </navigation>

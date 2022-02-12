@@ -15,23 +15,22 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Graduation">
         <activity
-            android:name=".Account.AddProductActivity"
+            android:name=".UI.Account.AddProductActivity"
             android:exported="false"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
-            android:name=".Account.AccountActivity"
+            android:name=".UI.Account.AccountActivity"
             android:exported="false"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Settings.SettingsActivity"
+            android:name=".UI.Settings.SettingsActivity"
             android:configChanges="orientation"
             android:exported="false"
             android:label="User Settings"
-            android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Authentication.RegisterActivity"
+            android:name=".UI.Authentication.RegisterActivity"
             android:configChanges="orientation"
             android:exported="true"
             android:label="Registeration"
@@ -43,13 +42,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Authentication.LoginActivity"
+            android:name=".UI.Authentication.LoginActivity"
             android:configChanges="orientation"
             android:exported="false"
             android:label="@string/title_activity_login"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".MainActivity"
+            android:name=".UI.Homepage.MainActivity"
             android:configChanges="orientation"
             android:exported="false"
             android:screenOrientation="portrait"

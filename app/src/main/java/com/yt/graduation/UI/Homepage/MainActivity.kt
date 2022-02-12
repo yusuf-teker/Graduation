@@ -1,4 +1,4 @@
-package com.yt.graduation
+package com.yt.graduation.UI.Homepage
 
 
 import android.content.Intent
@@ -9,9 +9,10 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.navigation.findNavController
 import com.google.firebase.auth.FirebaseAuth
-import com.yt.graduation.Account.AccountActivity
-import com.yt.graduation.Authentication.LoginActivity
-import com.yt.graduation.Settings.SettingsActivity
+import com.yt.graduation.R
+import com.yt.graduation.UI.Account.AccountActivity
+import com.yt.graduation.UI.Authentication.LoginActivity
+import com.yt.graduation.UI.Settings.SettingsActivity
 import com.yt.graduation.databinding.ActivityMainBinding
 
 

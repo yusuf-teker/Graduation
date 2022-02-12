@@ -1,4 +1,4 @@
-package com.yt.graduation.Authentication
+package com.yt.graduation.UI.Authentication
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -7,9 +7,8 @@ import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import com.google.firebase.auth.FirebaseAuth
-import com.yt.graduation.MainActivity
+import com.yt.graduation.UI.Homepage.MainActivity
 import com.yt.graduation.databinding.ActivityLoginBinding
-import com.yt.graduation.databinding.ActivityRegisterBinding
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -45,24 +44,23 @@ class LoginActivity : AppCompatActivity() {
         binding.apply {
             email = loginMail.text.toString()
             password = loginPassword.text.toString()
-
         }
         //this part will be changed
         binding.loginProgressBar.visibility= View.VISIBLE
-        lifecycleScope.launch {
-            delay(4000) // debounce effect
-            binding.loginProgressBar.visibility= View.GONE
-        }/////////////////////////////////////////////////
+
 
         auth.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 val intent = Intent(this, MainActivity::class.java)
+                binding.loginProgressBar.visibility= View.GONE
                 startActivity(intent)
                 finish()
             }
         }.addOnFailureListener { exception ->
+            binding.loginProgressBar.visibility= View.GONE
             Toast.makeText(applicationContext, exception.localizedMessage, Toast.LENGTH_LONG).show()
         }
+
 
     }
 
