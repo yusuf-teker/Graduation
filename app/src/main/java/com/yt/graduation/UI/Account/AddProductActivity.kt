@@ -45,7 +45,7 @@ class AddProductActivity : AppCompatActivity() {
 
         if (viewModel.auth.currentUser == null) goToLogin() //If there is no login, Go to login page
 
-       // val categories = viewModel.categories //From Database
+       // val categories = viewModel.categories //From Database //TODO
         val categories2 = viewModel.categories2
 
         val userId = viewModel.auth.currentUser!!.uid //Get user unique id

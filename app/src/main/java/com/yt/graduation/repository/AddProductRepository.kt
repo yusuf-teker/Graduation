@@ -20,16 +20,13 @@ class AddProductRepository {
     var auth: FirebaseAuth = FirebaseAuth.getInstance()
     private var database = Firebase.database
     private var storageRef = FirebaseStorage.getInstance().reference
-    private var imageUri: Uri = Uri.EMPTY
 
-    //Create a section "Products"
-    var dbRefProducts = database.reference.child("Products")
-
-
-    //Create a unique Key for each product !
 
 
     fun addProduct(product: Product): Boolean {
+
+        //Create a section "Products"
+        var dbRefProducts = database.reference.child("Products")
         var isAdded = false
         val productKey = dbRefProducts.push().key //push create a unique key
 
@@ -40,7 +37,6 @@ class AddProductRepository {
             val productImageRef = storageRef.child("product_images").child("$productKey.jpg")
             val uploadTask = productImageRef.putFile(product.productImage.toUri())
 
-
             val urlTask = uploadTask.continueWithTask { task ->
                 if (!task.isSuccessful) {
                     task.exception?.let {
@@ -48,24 +44,19 @@ class AddProductRepository {
                     }
                 }
                 productImageRef.downloadUrl
-
             }.addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     val downloadUri = task.result
-
                     product.productImage = downloadUri.toString()
                     dbRefProducts.setValue(product).addOnCompleteListener{ task ->
                         if(task.isSuccessful){
                             isAdded=true
                         }
-
                     }
                 } else {
                     // Handle failures
-                    // ...
                 }
             }
-
         }
 
 
@@ -90,6 +81,8 @@ class AddProductRepository {
         dbRefCategories.addValueEventListener(postListener)
         return categories
     }
+
+
 }
 
 
