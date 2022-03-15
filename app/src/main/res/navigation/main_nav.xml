@@ -18,5 +18,14 @@
         android:id="@+id/detailProductFragment"
         android:name="com.yt.graduation.UI.Homepage.DetailProductFragment"
         android:label="fragment_detail_product"
-        tools:layout="@layout/fragment_detail_product" />
+        tools:layout="@layout/fragment_detail_product" >
+        <action
+            android:id="@+id/action_detailProductFragment_to_allProductsFragment"
+            app:destination="@id/allProductsFragment"
+            app:popUpTo="@id/main_nav"
+            app:popUpToInclusive="true" />
+        <argument
+            android:name="productInformation"
+            app:argType="string" />
+    </fragment>
 </navigation>

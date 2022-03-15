@@ -47,7 +47,7 @@ class SettingsRepository {
         return User()
     }
 
-    fun setUser(user: User,isImage: Boolean) {
+    fun setUser(user: User) {
         if (auth.currentUser != null) {
             // Add User Image To Storage
             val userId = auth.currentUser!!.uid //get user unique Id
@@ -74,12 +74,16 @@ class SettingsRepository {
                     dbRefUser = database.reference.child("Users").child(userId)
                     dbRefUser.updateChildren(userUpdateMap).addOnCompleteListener { task ->
                         if (task.isSuccessful) {
-
+                            //
                         }
                     }
                 }
             }
         }
+    }
+
+    fun signOut() {
+        auth.signOut()
     }
 
 

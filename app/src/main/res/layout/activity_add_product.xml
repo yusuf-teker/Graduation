@@ -41,21 +41,38 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/productImageAdd" />
 
-        <Spinner
-            android:id="@+id/productCategorySpinner"
+        <RelativeLayout
+            android:id="@+id/spinner_root"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:background="@color/primaryLightColor"
-            android:minHeight="48dp"
-            android:padding="8dp"
-            android:scrollbarSize="4dp"
-            android:spinnerMode="dialog"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/custom_input"
             app:layout_constraintEnd_toEndOf="@+id/productNameEditText"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/productNameEditText"
             app:layout_constraintTop_toBottomOf="@+id/productNameEditText"
-            tools:ignore="SpeakableTextPresentCheck" />
+            android:orientation="horizontal">
+
+            <Spinner
+                android:id="@+id/productCategorySpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/transparent"
+                android:minHeight="48dp"
+                android:padding="8dp"
+                android:scrollbarSize="4dp"
+                android:spinnerMode="dialog"
+
+                tools:ignore="SpeakableTextPresentCheck" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_baseline_arrow_drop_down_24" />
+        </RelativeLayout>
+
 
         <EditText
             android:id="@+id/productPriceEditText"
@@ -65,15 +82,15 @@
             android:autofillHints=""
             android:background="@color/primaryLightColor"
             android:ems="10"
-            android:hint="@string/price"
+            android:hint="@string/product_price"
             android:inputType="number"
             android:minHeight="48dp"
             android:padding="8dp"
             android:textSize="20sp"
-            app:layout_constraintEnd_toEndOf="@+id/productCategorySpinner"
+            app:layout_constraintEnd_toEndOf="@+id/spinner_root"
             app:layout_constraintHorizontal_bias="0.502"
-            app:layout_constraintStart_toStartOf="@+id/productCategorySpinner"
-            app:layout_constraintTop_toBottomOf="@+id/productCategorySpinner" />
+            app:layout_constraintStart_toStartOf="@+id/spinner_root"
+            app:layout_constraintTop_toBottomOf="@+id/spinner_root" />
 
         <EditText
             android:id="@+id/productDescriptionEditText"
@@ -96,7 +113,7 @@
             android:id="@+id/addProductButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="24dp"
             android:background="@color/primaryColor"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
@@ -105,6 +122,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/productDescriptionEditText" />
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

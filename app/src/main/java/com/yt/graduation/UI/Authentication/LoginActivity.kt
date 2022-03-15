@@ -5,10 +5,14 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.google.firebase.auth.FirebaseAuth
+import com.yt.graduation.UI.Account.AddProductViewModel
 import com.yt.graduation.UI.Homepage.MainActivity
 import com.yt.graduation.databinding.ActivityLoginBinding
+import com.yt.graduation.model.User
+import com.yt.graduation.util.Resource
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -17,10 +21,7 @@ private lateinit var binding: ActivityLoginBinding
 
 class LoginActivity : AppCompatActivity() {
 
-    private lateinit var email: String
-    private lateinit var password: String
-    private lateinit var auth: FirebaseAuth
-
+    private val viewModel: LoginViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,44 +29,44 @@ class LoginActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-        auth = FirebaseAuth.getInstance()
-
         binding.loginButton.setOnClickListener() {
-            login(view)
+            login()
         }
         binding.goToRegister.setOnClickListener() {
-            goToRegister(view)
+            goToRegister()
         }
 
-
-    }
-
-    fun login(view: View) {
-        binding.apply {
-            email = loginMail.text.toString()
-            password = loginPassword.text.toString()
-        }
-        //this part will be changed
-        binding.loginProgressBar.visibility= View.VISIBLE
-
-
-        auth.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                val intent = Intent(this, MainActivity::class.java)
-                binding.loginProgressBar.visibility= View.GONE
-                startActivity(intent)
-                finish()
+        viewModel.userSignUpStatus.observe(this){
+            when(it){
+                is Resource.Success -> {
+                    binding.loginProgressBar.visibility= View.GONE
+                    goToMain()
+                }
+                is Resource.Loading -> {
+                    binding.loginProgressBar.visibility= View.VISIBLE
+                }
+                is Resource.Error -> {
+                    binding.loginProgressBar.visibility= View.GONE
+                    Toast.makeText(applicationContext, "Giriş Yapılamadı", Toast.LENGTH_SHORT).show()
+                }
             }
-        }.addOnFailureListener { exception ->
-            binding.loginProgressBar.visibility= View.GONE
-            Toast.makeText(applicationContext, exception.localizedMessage, Toast.LENGTH_LONG).show()
         }
-
 
     }
 
-    fun goToRegister(view: View) {
+    private fun login() {
+        binding.apply {
+            viewModel.login(loginMail.text.toString(),loginPassword.text.toString())
+        }
+    }
+
+    private fun goToRegister() {
         val intent = Intent(this, RegisterActivity::class.java)
+        startActivity(intent)
+    }
+    private fun goToMain() {
+        binding.loginProgressBar.visibility= View.GONE
+        val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
     }
 }

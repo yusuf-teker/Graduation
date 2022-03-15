@@ -11,7 +11,8 @@ data class Product(
     var productUploadDate: String="",
     var productOwner: String="",
     var productImage: String="",
-    val productState: Boolean=true) {
+    var productState: Boolean =true,
+    var productKey: String? = null) {
 
 
 }

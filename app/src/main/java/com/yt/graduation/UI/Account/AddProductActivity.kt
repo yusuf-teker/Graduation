@@ -3,31 +3,23 @@ package com.yt.graduation.UI.Account
 
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.Spinner
-import android.widget.Toast
+import android.widget.*
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
-import com.yt.graduation.UI.Authentication.LoginActivity
 import com.yt.graduation.R
+import com.yt.graduation.UI.Authentication.LoginActivity
 import com.yt.graduation.UI.Homepage.MainActivity
 import com.yt.graduation.databinding.ActivityAddProductBinding
 import com.yt.graduation.model.Product
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
-import java.net.URI
 import java.time.LocalDateTime
+
 
 private lateinit var binding: ActivityAddProductBinding
 
@@ -45,26 +37,42 @@ class AddProductActivity : AppCompatActivity() {
 
         if (viewModel.auth.currentUser == null) goToLogin() //If there is no login, Go to login page
 
-       // val categories = viewModel.categories //From Database //TODO
-        val categories2 = viewModel.categories2
-
-        val userId = viewModel.auth.currentUser!!.uid //Get user unique id
-
-        //Spinner
         spinner = binding.productCategorySpinner
-        val adapter = ArrayAdapter( this, R.layout.list_item_spinner,categories2)
-        spinner.adapter = adapter
-        spinner.onItemSelectedListener = object : //Get selected category from spinner
+        viewModel.categories.observe(this){
+            spinner.adapter = ArrayAdapter( this@AddProductActivity, R.layout.list_item_spinner,it)
+            spinner.onItemSelectedListener = object : //Get selected category from spinner
+                AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(parent: AdapterView<*>,
+                                            view: View, position: Int, id: Long) {
+                    product.productCategory = it[position]
+
+                }
+                override fun onNothingSelected(p0: AdapterView<*>?) {
+                    product.productCategory = it[it.lastIndex]
+                }
+            }
+        }
+
+        /* LiveData ile kullanılıyor
+        val categories1 = viewModel.getCategories(object : AddProductRepository.OnDataReceiveCallback{
+               override fun onDataReceived(categories: ArrayList<String>) {
+                   //Spinner
+                   spinner.adapter = ArrayAdapter( this@AddProductActivity, R.layout.list_item_spinner,categories)
+
+               }
+           })
+
+             spinner.onItemSelectedListener = object : //Get selected category from spinner
             AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>,
                                         view: View, position: Int, id: Long) {
-                product.productCategory = categories2[position]
+                product.productCategory = categories1[position]
 
             }
             override fun onNothingSelected(p0: AdapterView<*>?) {
-                product.productCategory = categories2[categories2.lastIndex]
+                product.productCategory = categories1[categories1.lastIndex]
             }
-        }
+        }*/
 
         binding.productImageAdd.setOnClickListener(){
             if (ContextCompat.checkSelfPermission(
@@ -89,16 +97,16 @@ class AddProductActivity : AppCompatActivity() {
             // Fill Product Object
             binding.apply {
                 product.productName = productNameEditText.text.toString()
-                product.productPrice = productPriceEditText.text.toString().toInt()
+                product.productPrice =  if(productPriceEditText.text.toString().isNotEmpty()) productPriceEditText.text.toString().toInt() else 0
                 product.productDescription = productDescriptionEditText.text.toString()
                 //product.productImage -> assign in onActivityResult
                 product.productUploadDate = LocalDateTime.now().toString()
-                product.productOwner = userId
             }
 
             //Add Product To Database
             if (viewModel.addProduct(product)){
                 Toast.makeText(this@AddProductActivity, "Product added",Toast.LENGTH_LONG).show()
+                goToMain()
             } else Toast.makeText(this@AddProductActivity, "Product can not added",Toast.LENGTH_LONG).show()
 
         } //endOf onClickListener
@@ -107,14 +115,17 @@ class AddProductActivity : AppCompatActivity() {
 
     }
 
-    private fun goToAddProduct() {
-        val intent = Intent(this, AddProductActivity::class.java)
-        startActivity(intent)
-    }
+
     private fun goToLogin() {
         val intent = Intent(this, LoginActivity::class.java)
         startActivity(intent)
     }
+    private fun goToMain() {
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+    }
+
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) { // Response from another activity
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) { // If response coming from crop activity
@@ -127,5 +138,7 @@ class AddProductActivity : AppCompatActivity() {
             }
         }
     }
+
+
 
 }

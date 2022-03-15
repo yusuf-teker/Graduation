@@ -7,7 +7,9 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.navigation.Navigation
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.yt.graduation.R
 import com.yt.graduation.UI.Account.AccountActivity
@@ -32,15 +34,18 @@ class MainActivity : AppCompatActivity() {
 
         binding.bottomNavigation.setOnNavigationItemSelectedListener { item ->
             when(item.itemId) {
-                /*
-                R.id.actionHomepage -> { //TODO
-                    // Respond to navigation item 2 click
-                    val navController = findNavController(R.id.fragmentContainerView)
-                    //navController.navigate(R.id.action_allProductsFragment_to_detailProductFragment)
+
+                R.id.actionHomepage -> {
+                    val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
+                    val navController = navHostFragment.navController
+                    val currentFragment = navController.currentDestination?.id
+
+                    if(currentFragment == R.id.detailProductFragment){
+                        navController.navigate(DetailProductFragmentDirections.actionDetailProductFragmentToAllProductsFragment())
+                    }
                     true
                 }
 
-                 */
                 R.id.actionAccount -> {
                     goToAccount()
                     true
@@ -81,5 +86,28 @@ class MainActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
+    private fun goToMain() {
+
+
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.main_nav, AllProductsFragment())
+        transaction.disallowAddToBackStack()
+        transaction.commit()
+
+
+        //val intent = Intent(this, MainActivity::class.java)
+        //startActivity(intent)
+
+        /* TODO
+        val currentFragment = supportFragmentManager.fragments.last()
+        if (currentFragment is  DetailProductFragment ){
+            val navController = Navigation.findNavController(
+                this,
+                R.id.main_nav
+            )
+            navController.navigate(R.id.action_detailProductFragment_to_allProductsFragment)
+        }
+        */
+    }
 
 }
