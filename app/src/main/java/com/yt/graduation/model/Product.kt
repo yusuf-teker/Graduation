@@ -1,8 +1,11 @@
 package com.yt.graduation.model
 
-import android.net.Uri
-import java.net.URI
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+
+@Parcelize
 data class Product(
     var productName: String="",
     var productPrice: Int=-1,
@@ -12,7 +15,7 @@ data class Product(
     var productOwner: String="",
     var productImage: String="",
     var productState: Boolean =true,
-    var productKey: String? = null) {
+    var productKey: String? = null) : Parcelable {
 
 
 }

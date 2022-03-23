@@ -1,5 +1,6 @@
 package com.yt.graduation.repository
 
+
 import androidx.core.net.toUri
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -9,6 +10,8 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.yt.graduation.model.Product
+import com.yt.graduation.util.FirebaseResultListener
+import kotlin.collections.ArrayList
 
 
 class AddProductRepository {
@@ -17,14 +20,13 @@ class AddProductRepository {
     private var database = Firebase.database
     private var storageRef = FirebaseStorage.getInstance().reference
 
-    fun addProduct(product: Product) {
+     fun addProduct(product: Product,  onCompletedListener: FirebaseResultListener) {
 
         //Create a section "Products"
         var dbRefProducts = database.reference.child("Products")
         val productKey = dbRefProducts.push().key //push create a unique key
 
         if (productKey != null) {
-
             //Create a unique key and add product Image To Storage
             dbRefProducts = dbRefProducts.child(productKey)
             val productImageRef = storageRef.child("product_images").child("$productKey.jpg")
@@ -44,12 +46,12 @@ class AddProductRepository {
                     product.productOwner = auth.currentUser!!.uid
                     product.productKey = productKey
                     isAdded=true
-                    dbRefProducts.setValue(product).addOnCompleteListener{ task ->
-                        if(task.isSuccessful){
-                        }
+
+                   dbRefProducts.setValue(product).addOnCompleteListener{ task ->
+                       onCompletedListener.onSuccess(task.isSuccessful)
                     }
                 } else {
-                    // Handle failures
+                    onCompletedListener.onSuccess(task.isCanceled)
                 }
             }
         }
@@ -97,7 +99,6 @@ class AddProductRepository {
         dbRefCategories.addValueEventListener(postListener)
         return arrayListOf()
     }
-
 
     interface OnDataReceiveCallback {
         fun onDataReceived(categories: ArrayList<String>)

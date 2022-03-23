@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.yt.graduation.databinding.FragmentDetailProductBinding
+import com.yt.graduation.model.Product
 import java.text.NumberFormat
 import java.util.*
 
@@ -15,11 +16,11 @@ import java.util.*
 class DetailProductFragment : Fragment() {
     private var _binding: FragmentDetailProductBinding? = null
     private val binding get() = _binding!!
-    var receivedProductInformations : List<String>? = null
+    var receivedProductInformations : Product? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (arguments != null) {
-            receivedProductInformations = arguments?.getString("productInformation")?.split("*")
+            receivedProductInformations = arguments?.getParcelable("productInformation")
         }
     }
 
@@ -30,26 +31,23 @@ class DetailProductFragment : Fragment() {
         _binding = FragmentDetailProductBinding.inflate(inflater, container, false)
 
         if (receivedProductInformations != null){
-            binding.productName.text =  receivedProductInformations!![0]
+            binding.productName.text =  receivedProductInformations!!.productName
 
-            val number = receivedProductInformations!![1].toInt()
+            val number = receivedProductInformations!!.productPrice
             val COUNTRY = "TR"
             val LANGUAGE = "tr"
             val str = NumberFormat.getCurrencyInstance(Locale(LANGUAGE, COUNTRY)).format(number)
 
-            binding.productPrice.text = str
-            binding.productDescription.text = receivedProductInformations!![2]
-            binding.productUploadDate.text = receivedProductInformations!![4].subSequence(0..9 )
-            Toast.makeText(context, receivedProductInformations!![6],Toast.LENGTH_SHORT).show()
+            binding.apply {
+                productPrice.text = str
+                productDescription.text = receivedProductInformations!!.productDescription
+                productUploadDate.text = receivedProductInformations!!.productUploadDate.subSequence(0..9 )
+            }
+
             Glide.with(binding.productImage.context)
-                .load(receivedProductInformations!![6]) // image url
+                .load(receivedProductInformations!!.productImage) // image url
                 .into(binding.productImage)
-
-
-
-
         }
-
 
         return binding.root
     }

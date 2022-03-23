@@ -15,7 +15,7 @@ class SettingsViewModel: ViewModel() {
     private val _user =  MutableLiveData<User>()
     val user : LiveData<User>
         get() =  _user
-
+//    Login View'e erisilebilir
 //    private val _userSignUpStatus = MutableLiveData<Boolean>()
 //    val userSignUpStatus: LiveData<Boolean> = _userSignUpStatus
 

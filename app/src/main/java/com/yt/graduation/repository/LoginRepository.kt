@@ -2,7 +2,6 @@ package com.yt.graduation.repository
 
 
 
-import android.util.Log
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.yt.graduation.util.Resource

@@ -4,21 +4,15 @@ import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.FirebaseStorage
 import com.yt.graduation.model.Product
 
 class AllProductsRepository {
 
     var auth: FirebaseAuth = FirebaseAuth.getInstance()
     private var database = Firebase.database
-    //private var storageRef = FirebaseStorage.getInstance().reference
-    val dbRef = FirebaseDatabase.getInstance().getReference("Products")
-
-
 
      fun getProducts( callback: OnDataReceiveCallback): ArrayList<Product>{
         val allProducts = ArrayList<Product>()

@@ -19,7 +19,6 @@ class SettingsRepository {
     private lateinit var dbRefUser: DatabaseReference
     private var user = User()
 
-
     fun getUser( callback: OnDataReceiveCallback): User {
         if (auth.currentUser != null) {
             val userId = auth.currentUser!!.uid

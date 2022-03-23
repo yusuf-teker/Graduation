@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:layout_height="match_parent">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/mainToolBar"
@@ -25,12 +23,12 @@
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        app:defaultNavHost="true"
         app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mainToolBar"
-        app:defaultNavHost="true"
-        app:navGraph="@navigation/main_nav"/>
+        app:navGraph="@navigation/main_nav" />
 
 
 
@@ -43,7 +41,10 @@
         app:layout_constraintStart_toStartOf="parent"
         android:background="@color/primaryLightColor"
         app:menu="@menu/bottom_menu"
+
         app:itemIconTint="@color/black"
         app:itemTextColor="@color/black"/>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

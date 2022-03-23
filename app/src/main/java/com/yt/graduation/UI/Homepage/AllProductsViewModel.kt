@@ -4,12 +4,11 @@ package com.yt.graduation.UI.Homepage
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.recyclerview.widget.GridLayoutManager
-import com.google.firebase.auth.AuthResult
-import com.yt.graduation.UI.Adapters.AllProductsAdapter
+import androidx.lifecycle.viewModelScope
 import com.yt.graduation.model.Product
 import com.yt.graduation.repository.AllProductsRepository
-import com.yt.graduation.util.Resource
+import kotlinx.coroutines.launch
+
 
 class AllProductsViewModel: ViewModel() {
 
@@ -19,12 +18,19 @@ class AllProductsViewModel: ViewModel() {
     val productList: LiveData<ArrayList<Product>>
         get() = _productList
 
+    //View Model View Model arası
+    fun setProductList(products: ArrayList<Product>){
+        _productList.postValue(products)
+    }
 
     fun refreshProducts(){
-      repository.getProducts(object : AllProductsRepository.OnDataReceiveCallback{
-          override fun onDataReceived(productList: ArrayList<Product>) {
-              _productList.postValue(productList)
-          }
-      })
+        viewModelScope.launch {
+            repository.getProducts(object : AllProductsRepository.OnDataReceiveCallback{
+                override fun onDataReceived(productList: ArrayList<Product>) {
+                    _productList.postValue(productList)
+                }
+            })
+        }
+
     }
 }

@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UI.OnSaleProductsFragment"
+    tools:context=".UI.Account.OnSaleProductsFragment"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
@@ -11,7 +11,7 @@
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Products on sale will be dislpayed here"
+        android:text="Products on sale will be displayed here"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

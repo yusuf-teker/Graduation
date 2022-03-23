@@ -35,20 +35,5 @@ class RegisterRepository {
                 }
 
             }
-//           auth.createUserWithEmailAndPassword(user.email, password).addOnCompleteListener { task ->
-//                if (task.isSuccessful) {
-//                    val userId = auth.currentUser!!.uid //Get user unique id
-//                    database = Firebase.database
-//                    val dbRef = database.reference
-//                    dbRef.child("Users").child(userId) .setValue(user).addOnCompleteListener{  task ->
-//                        if(task.isSuccessful){
-//                           // go to main
-//                            Log.d("RegisterRepository", "User ${user.name} created")
-//                        }
-//                    }
-//                }
-//            }.addOnFailureListener { exception ->
-//
-//            }
         }
     }

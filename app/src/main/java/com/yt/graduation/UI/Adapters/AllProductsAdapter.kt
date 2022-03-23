@@ -4,15 +4,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.yt.graduation.R
-import com.yt.graduation.UI.Homepage.AllProductsFragment
 import com.yt.graduation.UI.Homepage.AllProductsFragmentDirections
-import com.yt.graduation.UI.Homepage.DetailProductFragmentArgs
 import com.yt.graduation.model.Product
 
 
@@ -23,7 +19,6 @@ class AllProductsAdapter(private var products: ArrayList<Product>): RecyclerView
         private val productImageView: ImageView = itemView.findViewById(R.id.productImage)
 
         init {
-
             itemView.setOnClickListener(this)
         }
 
@@ -45,13 +40,7 @@ class AllProductsAdapter(private var products: ArrayList<Product>): RecyclerView
         holder.bind(currentItem)
 
         holder.itemView.setOnClickListener {
-            var toBeSent: String
-            currentItem.apply {
-                toBeSent=
-                    "$productName*$productPrice*$productDescription*$productCategory*$productUploadDate*$productOwner*$productImage"
-            }
-
-            val action = AllProductsFragmentDirections.actionAllProductsFragmentToDetailProductFragment(toBeSent)
+            val action = AllProductsFragmentDirections.actionAllProductsFragmentToDetailProductFragment(currentItem)
             it.findNavController().navigate(action)
         }
     }
@@ -66,5 +55,6 @@ class AllProductsAdapter(private var products: ArrayList<Product>): RecyclerView
 
         return ViewHolder(itemView)
     }
+
 
 }
