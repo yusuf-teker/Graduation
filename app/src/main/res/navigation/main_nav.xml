@@ -54,6 +54,9 @@
         <action
             android:id="@+id/action_accountFragment_to_addProductFragment"
             app:destination="@id/addProductFragment" />
+        <action
+            android:id="@+id/action_accountFragment_to_detailProductFragment"
+            app:destination="@id/detailProductFragment" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"

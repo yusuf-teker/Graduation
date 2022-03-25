@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
@@ -19,28 +20,29 @@ import com.yt.graduation.databinding.ActivityMainBinding
 private lateinit var binding: ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var auth: FirebaseAuth
     private lateinit var navController:NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
-        val view = binding.root
-        setContentView(view)
+        setContentView(binding.root)
 
         setSupportActionBar(binding.mainToolBar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        binding.mainToolBar.setNavigationOnClickListener { onBackPressed() }
 
-
-        //Add Product Fragment'a cevrildiğinde yapılacaklar
-       val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
-         navController = navHostFragment.navController
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
+        navController = navHostFragment.findNavController()
         binding.bottomNavigation.setupWithNavController(navController)
         val appBarConfiguration = AppBarConfiguration(setOf(R.id.allProductsFragment,R.id.chatFragment, R.id.accountFragment))
+
+
         setupActionBarWithNavController(navController, appBarConfiguration)
-
+        // NavigationUI.setupActionBarWithNavController(this,navController, appBarConfiguration)
     }
-
+    override fun onSupportNavigateUp(): Boolean { //UP Button
+        return navController.navigateUp() || super.onSupportNavigateUp()
+    }
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         super.onCreateOptionsMenu(menu)
         menuInflater.inflate(R.menu.menu, menu)
@@ -49,14 +51,9 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         super.onOptionsItemSelected(item)
         if (item.itemId == R.id.actionSettings) {
-            //goToSettings()
             findNavController(R.id.fragmentContainerView).navigate(R.id.settingsFragment)
         }
         return true
     }
-
-
-
-
 
 }

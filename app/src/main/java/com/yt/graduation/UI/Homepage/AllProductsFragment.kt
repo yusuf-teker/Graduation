@@ -26,7 +26,7 @@ class AllProductsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener{
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        (activity as MainActivity).supportActionBar?.title = "Store"
+        //(activity as MainActivity).supportActionBar?.title = "Store"
         viewModel   = ViewModelProvider(this).get(AllProductsViewModel::class.java)
         val auth = FirebaseAuth.getInstance()
 
@@ -40,8 +40,9 @@ class AllProductsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener{
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-            _binding = FragmentAllProductsBinding.inflate(inflater, container, false)
-        //Before fetchind data //create empty list
+        _binding = FragmentAllProductsBinding.inflate(inflater, container, false)
+
+        //Before fetching data //create empty list
         recyclerView = binding.HomepageRecyclerView
         recyclerView.layoutManager = GridLayoutManager(context,2)
 

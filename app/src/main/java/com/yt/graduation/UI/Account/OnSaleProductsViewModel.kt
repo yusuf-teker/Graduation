@@ -1,31 +1,24 @@
-package com.yt.graduation.UI.Homepage
-
+package com.yt.graduation.UI.Account
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.yt.graduation.model.Product
-import com.yt.graduation.repository.AllProductsRepository
+import com.yt.graduation.repository.OnSaleProductsRepository
 import kotlinx.coroutines.launch
 
+class OnSaleProductsViewModel : ViewModel() {
 
-class AllProductsViewModel: ViewModel() {
-
-    private val repository = AllProductsRepository()
+    private val repository = OnSaleProductsRepository()
 
     private var _productList = MutableLiveData<ArrayList<Product>>()
     val productList: LiveData<ArrayList<Product>>
         get() = _productList
 
-    //View Model View Model arası
-    fun setProductList(products: ArrayList<Product>){
-        _productList.postValue(products)
-    }
-
-    fun refreshProducts(){
+    fun getOnSaleProducts(){
         viewModelScope.launch {
-            repository.getProducts(object : AllProductsRepository.OnDataReceiveCallback{
+            repository.getProducts(object : OnSaleProductsRepository.OnDataReceiveCallback{
                 override fun onDataReceived(productList: ArrayList<Product>) {
                     _productList.postValue(productList)
                 }

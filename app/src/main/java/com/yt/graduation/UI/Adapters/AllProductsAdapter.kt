@@ -8,6 +8,7 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.yt.graduation.R
+import com.yt.graduation.UI.Account.AccountFragmentDirections
 import com.yt.graduation.UI.Homepage.AllProductsFragmentDirections
 import com.yt.graduation.model.Product
 
@@ -40,8 +41,14 @@ class AllProductsAdapter(private var products: ArrayList<Product>): RecyclerView
         holder.bind(currentItem)
 
         holder.itemView.setOnClickListener {
-            val action = AllProductsFragmentDirections.actionAllProductsFragmentToDetailProductFragment(currentItem)
-            it.findNavController().navigate(action)
+            if (it.findNavController().currentDestination?.id == R.id.allProductsFragment){
+                val action = AllProductsFragmentDirections.actionAllProductsFragmentToDetailProductFragment(currentItem)
+                it.findNavController().navigate(action)
+            }else{
+                val action = AccountFragmentDirections.actionAccountFragmentToDetailProductFragment(currentItem)
+                it.findNavController().navigate(action)
+            }
+
         }
     }
 

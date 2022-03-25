@@ -48,6 +48,7 @@ class AddProductRepository {
                     isAdded=true
 
                    dbRefProducts.setValue(product).addOnCompleteListener{ task ->
+
                        onCompletedListener.onSuccess(task.isSuccessful)
                     }
                 } else {
