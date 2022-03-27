@@ -18,4 +18,5 @@
         tools:srcCompat="@tools:sample/avatars"
         android:contentDescription="@string/product_image" />
 
+
 </androidx.cardview.widget.CardView>

@@ -4,33 +4,26 @@ package com.yt.graduation.UI.Settings
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.google.firebase.auth.AuthResult
 import com.yt.graduation.model.User
 import com.yt.graduation.repository.SettingsRepository
-import com.yt.graduation.util.Resource
+import com.yt.graduation.util.FirebaseResultListener
+import com.yt.graduation.util.OnDataReceiveCallback
 
 class SettingsViewModel: ViewModel() {
+
     private val repository = SettingsRepository()
 
-    private val _user =  MutableLiveData<User>()
-    val user : LiveData<User>
-        get() =  _user
-//    Login View'e erisilebilir
-//    private val _userSignUpStatus = MutableLiveData<Boolean>()
-//    val userSignUpStatus: LiveData<Boolean> = _userSignUpStatus
-
-    fun setUser(user: User){
+    fun setUser(user: User,resultListener: FirebaseResultListener){
         if(user.name != ""){
-            repository.setUser(user)
+            repository.setUser(user,resultListener)
         }
     }
 
-    fun getUser( callback: SettingsRepository.OnDataReceiveCallback):User{
+    fun getUser( callback: OnDataReceiveCallback):User{
        return repository.getUser(callback)
     }
 
     fun signOut(){
-//        _userSignUpStatus.postValue(false)
         repository.signOut()
     }
 

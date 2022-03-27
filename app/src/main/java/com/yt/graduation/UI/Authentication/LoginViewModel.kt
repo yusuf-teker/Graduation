@@ -17,10 +17,10 @@ class LoginViewModel: ViewModel() {
     val userSignUpStatus: LiveData<Resource<AuthResult>> = _userSignUpStatus
 
     fun login(email: String, password: String){
-        _userSignUpStatus.postValue(Resource.Loading())
+        _userSignUpStatus.postValue(Resource.Loading()) //Progress Bar Shown
         viewModelScope.launch {
             val loginResult = repository.login(email,password)
-            _userSignUpStatus.postValue(loginResult) //repo'dan gelen Resultı viewModel içinde değiştir
+            _userSignUpStatus.postValue(loginResult) //loginResult is Resource.Success or Resource.Error//so Progress Bar not Shown
         }
     }
 }

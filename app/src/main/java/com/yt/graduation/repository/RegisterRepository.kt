@@ -19,21 +19,16 @@ import kotlinx.coroutines.withContext
 class RegisterRepository {
 
     private var auth: FirebaseAuth= FirebaseAuth.getInstance()
-    private var database: FirebaseDatabase = Firebase.database
-
+    private var databaseRef = Firebase.database.reference
 
     suspend fun register(user: User,password:String) : Resource<AuthResult>{
         return withContext(Dispatchers.IO){
-
             safeCall { //herhangi bir yerde exception çıkarsa Error classını döndürür
                 val registrationResult =  auth.createUserWithEmailAndPassword(user.email, password).await()
                 val userId = auth.currentUser!!.uid //Get user unique id
-                database = Firebase.database
-                val dbRef = database.reference
-                dbRef.child("Users").child(userId) .setValue(user).await()
+                databaseRef.child("Users").child(userId).setValue(user).await()//Add Database->Users->uniqueUserId->all variable in user Model
                 Resource.Success(registrationResult) //Hata olmazsa Success döndür
                 }
-
             }
         }
     }

@@ -1,5 +1,7 @@
 package com.yt.graduation.repository
 
+import android.util.Log
+import android.widget.Toast
 import androidx.core.net.toUri
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -9,7 +11,11 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
+import com.yt.graduation.UI.Settings.SettingsFragment
 import com.yt.graduation.model.User
+import com.yt.graduation.util.FirebaseResultListener
+import com.yt.graduation.util.OnDataReceiveCallback
+import kotlin.coroutines.coroutineContext
 
 
 class SettingsRepository {
@@ -27,11 +33,10 @@ class SettingsRepository {
             dbRefUser = database.reference.child("Users").child(userId)
             val postListener = object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
-                    user.name =
-                        dataSnapshot.child("name").value.toString() //User -> userId -> name
+                    user.name = dataSnapshot.child("name").value.toString() //User -> userId -> name
                     user.image = dataSnapshot.child("image").value.toString() //User -> userId -> image
-                    user.email = auth.currentUser!!.email.toString()
-                    user.registrationDate = dataSnapshot.child("registrationDate").value.toString()
+                    //user.email = auth.currentUser!!.email.toString()
+                    //user.registrationDate = dataSnapshot.child("registrationDate").value.toString()
                     callback.onDataReceived(user.name, user.image)
                 }
 
@@ -46,13 +51,15 @@ class SettingsRepository {
         return User()
     }
 
-    fun setUser(user: User) {
+    fun setUser(user: User,resultListener: FirebaseResultListener) {
         if (auth.currentUser != null) {
+
             // Add User Image To Storage
             val userId = auth.currentUser!!.uid //get user unique Id
-            val userImageRef = storageRef.child("profile_images").child(userId + ".jpg")
+            val userImageRef = storageRef.child("profile_images").child("$userId.jpg")
+
             //Providing image uri  and //Add Image To Storage
-            val uploadTask = userImageRef.putFile(user.image.toUri()).continueWithTask { task ->
+            userImageRef.putFile(user.image.toUri()).continueWithTask { task ->
                 if (!task.isSuccessful) {
                     task.exception?.let {
                         throw it
@@ -60,8 +67,7 @@ class SettingsRepository {
                 }
                 userImageRef.downloadUrl
             }.addOnCompleteListener { task ->
-                //After put file to storage, if the process is successfull then add this to realtime DB
-
+                //After put file to storage, if the process is successful then add this to realtime DB
                 if (task.isSuccessful) {
                     val downloadUri = task.result // Create HTTP link
                     val userUpdateMap = HashMap<String, Any>()
@@ -73,7 +79,7 @@ class SettingsRepository {
                     dbRefUser = database.reference.child("Users").child(userId)
                     dbRefUser.updateChildren(userUpdateMap).addOnCompleteListener { task ->
                         if (task.isSuccessful) {
-                            //
+                            resultListener.onSuccess(true)
                         }
                     }
                 }
@@ -86,8 +92,6 @@ class SettingsRepository {
     }
 
 
-    interface OnDataReceiveCallback {
-        fun onDataReceived(display_name: String, photo: String)
-    }
+
 
 }

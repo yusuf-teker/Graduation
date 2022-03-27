@@ -4,6 +4,7 @@ data class User(
     var name: String="",
     var email: String="",
     var registrationDate: String="",
-    var image: String="default" ) {
+    var image: String="default",
+    var favoriteProducts: ArrayList<String> =  ArrayList<String>()) {
 
 }

@@ -28,7 +28,6 @@ class RegisterViewModel : ViewModel() {
     fun register(user: User,password1:String,password2:String){
         _userRegistrationStatus.postValue(Resource.Loading())
         if (validateRegistration(user.name,user.email,password1,password2)){
-
             viewModelScope.launch(Dispatchers.Main) {
                 val registerResult =  repository.register(user,password1)
                 _userRegistrationStatus.postValue(registerResult)//_userRegistrationStatus.value = registerResult

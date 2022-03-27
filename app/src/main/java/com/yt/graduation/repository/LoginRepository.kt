@@ -11,7 +11,7 @@ import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 
 
-class   LoginRepository {
+class LoginRepository {
 
     private var auth: FirebaseAuth= FirebaseAuth.getInstance()
 
