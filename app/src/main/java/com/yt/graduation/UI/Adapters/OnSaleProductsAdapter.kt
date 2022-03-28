@@ -1,42 +1,20 @@
 package com.yt.graduation.UI.Adapters
 
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.ImageView
+import android.app.AlertDialog
+import android.content.Context
+import android.content.DialogInterface
 import androidx.navigation.findNavController
-import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.yt.graduation.R
 import com.yt.graduation.UI.Account.AccountFragmentDirections
 import com.yt.graduation.UI.Account.FavoriteProductsFragmentDirections
+import com.yt.graduation.UI.Account.OnSaleProductsViewModel
 import com.yt.graduation.UI.Homepage.AllProductsFragmentDirections
 import com.yt.graduation.model.Product
 
+//extended with AllProductAdapter
+class OnSaleProductsAdapter(private var products: ArrayList<Product>, private val viewModel: OnSaleProductsViewModel): AllProductsAdapter(products) {
 
-open class AllProductsAdapter(private var products: ArrayList<Product>): RecyclerView.Adapter<AllProductsAdapter.ViewHolder>() {
-    class ViewHolder (itemView: View): View.OnClickListener, RecyclerView.ViewHolder(itemView){
-
-        private lateinit var product: Product
-        private val productImageView: ImageView = itemView.findViewById(R.id.productImage)
-
-        init {
-            itemView.setOnClickListener(this)
-        }
-
-        fun bind(product : Product){
-            this.product = product
-            val context = itemView.context
-            Glide.with(context)
-                .load(product.productImage) // image url
-                .into(productImageView)
-        }
-        override fun onClick(p0: View?) {
-
-        }
-
-    }
-
+    //Override onBindViewHolder so We can delete items with long press
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentItem = products[position]
         holder.bind(currentItem)
@@ -56,23 +34,32 @@ open class AllProductsAdapter(private var products: ArrayList<Product>): Recycle
             }
 
         }
+        holder.itemView.setOnLongClickListener(){
+            showAddDeleteDialog(it.context,currentItem.productKey!!,currentItem.productName)
+
+            true
+        }
+
+
+
     }
 
-    override fun getItemCount(): Int {
-        return  products.size
+    private fun showAddDeleteDialog(context: Context,productKey: String,productName: String) {
+        val dialog: AlertDialog.Builder = AlertDialog.Builder(context)
+        dialog.setCancelable(false)
+        dialog.setTitle("Delete $productName")
+        dialog.setMessage("Are you sure you want to delete this item?" );
+        dialog
+            .setPositiveButton("Yes, delete it.") { dialog, id ->
+                viewModel.deleteProduct(productKey)
+                viewModel.refreshProducts()
+            }
+            .setNegativeButton("No, don't do that") { dialog, which ->
+
+            }
+        val alert: AlertDialog = dialog.create()
+        alert.show()
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val itemView = LayoutInflater.from(parent.context)
-            .inflate(R.layout.list_item_product, parent, false)
-
-        return ViewHolder(itemView)
-    }
-
-    fun refreshData(products : ArrayList<Product>){
-        this.products.clear()
-        this.products.addAll(products)
-        notifyDataSetChanged()
-    }
 
 }

@@ -16,7 +16,7 @@ class OnSaleProductsViewModel : ViewModel() {
     val productList: LiveData<ArrayList<Product>>
         get() = _productList
 
-    fun getOnSaleProducts(){
+    fun refreshProducts(){
         viewModelScope.launch {
             repository.getProducts(object : OnSaleProductsRepository.OnDataReceiveCallback{
                 override fun onDataReceived(productList: ArrayList<Product>) {
@@ -25,4 +25,9 @@ class OnSaleProductsViewModel : ViewModel() {
             })
         }
     }
+
+    fun deleteProduct(productKey: String){
+        repository.deleteProduct(productKey)
+    }
+
 }

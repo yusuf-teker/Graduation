@@ -2,21 +2,23 @@ package com.yt.graduation.repository
 
 import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import com.yt.graduation.model.Product
 
 class OnSaleProductsRepository {
 
     var auth: FirebaseAuth = FirebaseAuth.getInstance()
-    private var database = Firebase.database
-
+    private lateinit var productsRef: DatabaseReference
+    private lateinit var database: FirebaseDatabase
+    private lateinit var storageRef: StorageReference
 
     fun getProducts( callback: OnDataReceiveCallback): ArrayList<Product>{
         val onSaleProducts = ArrayList<Product>()
+        database = Firebase.database
         val dbRefProducts = database.reference.child("Products")
         dbRefProducts.addListenerForSingleValueEvent(object: ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -46,6 +48,26 @@ class OnSaleProductsRepository {
         })
 
         return onSaleProducts
+    }
+
+    fun deleteProduct(productKey: String){
+        if (auth.currentUser!=null){
+            database = Firebase.database
+            productsRef = database.reference.child("Products")
+
+            val currentProduct = productsRef.child(productKey)
+            currentProduct.child("productImage").get().addOnSuccessListener {
+                Log.d("Favorite",it.value.toString())
+                val url = it.value.toString()
+                storageRef = FirebaseStorage.getInstance().getReferenceFromUrl(url)
+                currentProduct.removeValue()
+                storageRef.delete().addOnSuccessListener {
+                    Log.e("Picture","#deleted");
+                }
+            }
+
+        }
+
     }
 
     interface OnDataReceiveCallback {

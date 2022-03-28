@@ -8,12 +8,9 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.yt.graduation.R
-import com.yt.graduation.UI.Adapters.AllProductsAdapter
+import com.yt.graduation.UI.Adapters.OnSaleProductsAdapter
 import com.yt.graduation.databinding.FragmentOnSaleProductsBinding
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import com.yt.graduation.model.Product
 
 
 class OnSaleProductsFragment : Fragment() {
@@ -35,24 +32,21 @@ class OnSaleProductsFragment : Fragment() {
 
         recyclerView = binding.OnSaleRecyclerView
         recyclerView.layoutManager = GridLayoutManager(context,2)
-
+        val adapter = OnSaleProductsAdapter(ArrayList<Product>(),viewModel)
+        recyclerView.adapter = adapter
         viewModel.productList.observe(viewLifecycleOwner){ products ->
-            GlobalScope.launch(Dispatchers.Main ) {
-                products.let {
-                    recyclerView.adapter = AllProductsAdapter(it) //AllProductsAdapter is enough for now
-                }
-            }
+            adapter.refreshData(products)
         }
 
 
         // Inflate the layout for this fragment
-        return  return binding.root
+        return binding.root
     }
 
 
     override fun onResume() {
         super.onResume()
-        viewModel.getOnSaleProducts()
+        viewModel.refreshProducts()
 
     }
 

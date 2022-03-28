@@ -5,35 +5,38 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import com.yt.graduation.model.Product
 
 class FavoriteProductsRepository {
 
     private var auth: FirebaseAuth = FirebaseAuth.getInstance()
     private lateinit var userRef: DatabaseReference
-    private lateinit var productRef: DatabaseReference
+    private lateinit var productsRef: DatabaseReference
     private lateinit var database: FirebaseDatabase
+    private lateinit var storageRef: StorageReference
 
     fun refreshData(callback: OnDataReceiveCallback){
         if (auth.currentUser!=null){
             database = Firebase.database
             val userId = auth.currentUser!!.uid
             userRef = database.reference.child("Users").child(userId)
-            productRef = database.reference.child("Products")
+            productsRef = database.reference.child("Products")
 
             val favoriteProductsNames = ArrayList<String>()
             userRef.child("favoriteProducts").get().addOnSuccessListener {
                 if (it.value!=null){
                     favoriteProductsNames.addAll( it.value as ArrayList<String>)
                     for (i in it.value as ArrayList<String>){
-                        Log.d("Favorites  ",productRef.equalTo(i).toString())
+                        Log.d("Favorites  ",productsRef.equalTo(i).toString())
                     }
                     val favoriteProductsList = ArrayList<Product>()
-                    productRef.addListenerForSingleValueEvent(object :ValueEventListener {
+                    productsRef.addListenerForSingleValueEvent(object :ValueEventListener {
                         override fun onDataChange(snapshot: DataSnapshot) {
                             for (ds in snapshot.children){
                                 if (favoriteProductsNames.contains(ds.child("productKey").value.toString())){
-                                    val product = Product(
+                                    var product = Product(
                                         ds.child("productName").value.toString(),
                                         ds.child("productPrice").value.toString().toInt(),
                                         ds.child("productDescription").value.toString(),
@@ -60,6 +63,7 @@ class FavoriteProductsRepository {
             }
         }
     }
+
 
 
 
