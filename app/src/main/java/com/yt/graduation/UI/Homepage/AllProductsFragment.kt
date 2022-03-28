@@ -37,15 +37,15 @@ class AllProductsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener{
 
         recyclerView = binding.HomepageRecyclerView
         recyclerView.layoutManager = GridLayoutManager(context,2)
-
+        val adapter =  AllProductsAdapter(ArrayList())
+        recyclerView.adapter = adapter
         viewModel.productList.observe(viewLifecycleOwner){ products ->
             GlobalScope.launch(Dispatchers.Main ) {
                 products.let {
-                    recyclerView.adapter = AllProductsAdapter(it)
+                    adapter.refreshData(it)
                 }
             }
         }
-
 
         return binding.root
     }

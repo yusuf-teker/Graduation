@@ -6,7 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
+import com.yt.graduation.R
 import com.yt.graduation.databinding.FragmentDetailProductBinding
 import com.yt.graduation.model.Product
 import java.text.NumberFormat
@@ -17,11 +19,15 @@ class DetailProductFragment : Fragment() {
     private var _binding: FragmentDetailProductBinding? = null
     private val binding get() = _binding!!
     var receivedProductInformations : Product? = null
+    private lateinit var viewModel : DetailProductsViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (arguments != null) {
             receivedProductInformations = arguments?.getParcelable("productInformation")
         }
+        viewModel = ViewModelProvider(this).get(DetailProductsViewModel::class.java)
+        receivedProductInformations!!.productKey?.let { viewModel.isFavorite(it) }
     }
 
     override fun onCreateView(
@@ -32,6 +38,7 @@ class DetailProductFragment : Fragment() {
 
         if (receivedProductInformations != null){
             binding.productName.text =  receivedProductInformations!!.productName
+
 
             val number = receivedProductInformations!!.productPrice
             val COUNTRY = "TR"
@@ -48,6 +55,18 @@ class DetailProductFragment : Fragment() {
                 .load(receivedProductInformations!!.productImage) // image url
                 .into(binding.productImage)
         }
+
+        viewModel.isFavorite.observe(viewLifecycleOwner){
+            if (it){
+                binding.favoriteButton.setImageResource(R.drawable.baseline_favorite_black_36)
+            }else
+                binding.favoriteButton.setImageResource(R.drawable.baseline_favorite_border_black_36)
+        }
+
+        binding.favoriteButton.setOnClickListener {
+            viewModel.addOrRemoveFavorites(productKey = receivedProductInformations!!.productKey.toString())
+        }
+
 
         return binding.root
     }

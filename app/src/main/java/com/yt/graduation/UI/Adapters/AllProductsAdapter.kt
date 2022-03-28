@@ -41,6 +41,7 @@ class AllProductsAdapter(private var products: ArrayList<Product>): RecyclerView
         holder.bind(currentItem)
 
         holder.itemView.setOnClickListener {
+            //Check current Destination because i use same adapter for both AllProducts and OnSaleProducts
             if (it.findNavController().currentDestination?.id == R.id.allProductsFragment){
                 val action = AllProductsFragmentDirections.actionAllProductsFragmentToDetailProductFragment(currentItem)
                 it.findNavController().navigate(action)
@@ -63,5 +64,10 @@ class AllProductsAdapter(private var products: ArrayList<Product>): RecyclerView
         return ViewHolder(itemView)
     }
 
+    fun refreshData(products : ArrayList<Product>){
+        this.products.clear()
+        this.products.addAll(products)
+        notifyDataSetChanged()
+    }
 
 }

@@ -18,10 +18,6 @@ class AllProductsViewModel: ViewModel() {
     val productList: LiveData<ArrayList<Product>>
         get() = _productList
 
-    //View Model View Model arası
-    fun setProductList(products: ArrayList<Product>){
-        _productList.postValue(products)
-    }
 
     fun refreshProducts(){
         viewModelScope.launch {
