@@ -32,6 +32,9 @@
         <action
             android:id="@+id/action_favoriteProductsFragment_to_onSaleProductsFragment"
             app:destination="@id/onSaleProductsFragment" />
+        <action
+            android:id="@+id/action_favoriteProductsFragment_to_detailProductFragment"
+            app:destination="@id/detailProductFragment" />
     </fragment>
     <fragment
         android:id="@+id/onSaleProductsFragment"

@@ -24,6 +24,11 @@
                                 <LayoutPositions />
                               </value>
                             </entry>
+                            <entry key="action_accountFragment_to_detailProductFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
                             <entry key="action_accountFragment_to_favoriteProductsFragment3">
                               <value>
                                 <LayoutPositions />
@@ -143,8 +148,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="-441" />
-                            <option name="y" value="908" />
+                            <option name="x" value="-419" />
+                            <option name="y" value="918" />
                           </Point>
                         </option>
                       </LayoutPositions>
