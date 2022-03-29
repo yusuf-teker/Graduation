@@ -27,7 +27,7 @@ class DetailProductFragment : Fragment() {
             receivedProductInformations = arguments?.getParcelable("productInformation")
         }
         viewModel = ViewModelProvider(this).get(DetailProductsViewModel::class.java)
-        receivedProductInformations!!.productKey?.let { viewModel.isFavorite(it) }
+
     }
 
     override fun onCreateView(
@@ -62,13 +62,38 @@ class DetailProductFragment : Fragment() {
             }else
                 binding.favoriteButton.setImageResource(R.drawable.baseline_favorite_border_black_36)
         }
+        viewModel.productOwnerName.observe(viewLifecycleOwner){
+            binding.ownerName.text = it
+        }
+        viewModel.productOwnerImage.observe(viewLifecycleOwner){
+            if ( !(it.equals("default") || it.isEmpty())){
+                activity?.let { activity->
+                    Glide.with(activity)
+                        .load(it) // image url
+                        .circleCrop()
+                        .into(binding.ownerImage)
+                }
+            }else{
+                binding.ownerImage.setImageResource(R.drawable.defaultuser)
+            }
+
+
+        }
+
 
         binding.favoriteButton.setOnClickListener {
             viewModel.addOrRemoveFavorites(productKey = receivedProductInformations!!.productKey.toString())
         }
 
 
+
         return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        receivedProductInformations!!.productKey?.let { viewModel.isFavorite(it) }
+        viewModel.getOwnerInfo(receivedProductInformations!!.productOwner)
     }
 
     override fun onDestroyView() {

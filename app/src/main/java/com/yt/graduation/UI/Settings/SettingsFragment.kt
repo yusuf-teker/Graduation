@@ -42,7 +42,7 @@ class SettingsFragment : Fragment() {
         user = viewModel.getUser(object : OnDataReceiveCallback {
             override fun onDataReceived(display_name: String, photo: String) {
                 binding.settingsUserName.setText(display_name)
-                if (photo=="default" || photo.isNotEmpty()){ //if user didn't add a profile photo
+                if (photo=="default" || photo.isEmpty()){ //if user didn't add a profile photo
                     binding.userImage.setBackgroundResource(R.drawable.defaultuser)
                 }else{
                     activity?.let {

@@ -36,7 +36,6 @@ class AddProductFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        (activity as MainActivity).supportActionBar?.title = "Add Product"
 
         viewModel = ViewModelProvider(this).get(AddProductViewModel::class.java)
         viewModel.addProductFragment = this

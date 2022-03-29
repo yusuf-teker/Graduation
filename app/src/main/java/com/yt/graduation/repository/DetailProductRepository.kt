@@ -5,6 +5,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import com.yt.graduation.UI.Homepage.DetailProductsViewModel
+import com.yt.graduation.model.Product
 import com.yt.graduation.model.User
 import com.yt.graduation.util.FirebaseResultListener
 
@@ -59,6 +61,26 @@ class DetailProductRepository {
                 else resultListener.onSuccess(false)
             }
         }
+    }
+
+    fun getOwnerInfo(ownerId: String,callback: OnDataReceiveCallback) {
+        database = Firebase.database
+        userRef = database.reference.child("Users").child(ownerId)
+        userRef.addListenerForSingleValueEvent(object : ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val name = snapshot.child("name").value.toString() //User -> userId -> name
+                val imageUrl = snapshot.child("image").value.toString() //User -> userId -> image
+                callback.onDataReceived(arrayListOf(name, imageUrl))
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        })
+    }
+    interface OnDataReceiveCallback {
+        fun onDataReceived(ownerInfo: ArrayList<String>)
     }
 
 }

@@ -38,8 +38,9 @@ class MainActivity : AppCompatActivity() {
 
 
         setupActionBarWithNavController(navController, appBarConfiguration)
-        // NavigationUI.setupActionBarWithNavController(this,navController, appBarConfiguration)
+
     }
+
     override fun onSupportNavigateUp(): Boolean { //UP Button
         return navController.navigateUp() || super.onSupportNavigateUp()
     }

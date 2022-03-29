@@ -25,7 +25,6 @@ class AccountFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        (activity as MainActivity).supportActionBar?.title = "My Account"
 
     }
 
