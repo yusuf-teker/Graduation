@@ -46,6 +46,9 @@ class AllProductsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener{
                 }
             }
         }
+        viewModel.signStatus.observe(viewLifecycleOwner){
+            if (!it) findNavController().navigate(R.id.loginFragment)
+        }
 
         return binding.root
     }
@@ -65,7 +68,7 @@ class AllProductsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener{
     override fun onResume() {
         super.onResume()
         viewModel.refreshProducts()
-
+        viewModel.isSigned()
     }
     override fun onRefresh() {
        viewModel.refreshProducts()

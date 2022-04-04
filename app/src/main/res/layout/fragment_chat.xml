@@ -7,6 +7,32 @@
     tools:context=".UI.chat.ChatFragment">
 
 
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/gray">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/receiverUserImage"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/defaultuser"
+            android:layout_margin="10dp"/>
+        <TextView
+            android:id="@+id/receiverUserName"
+            android:layout_marginLeft="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_gravity="center"
+            tools:text="ReceiverName"
+            android:textColor="@color/black"/>
+    </LinearLayout>
+
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
@@ -14,7 +40,7 @@
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
 
 
     <LinearLayout
@@ -24,24 +50,34 @@
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:padding="10dp">
-        <EditText
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="48dp"
-            android:background="@drawable/edit_text_background"
-            android:layout_gravity="center"
-            android:hint="Message"
-            android:paddingLeft="10dp"/>
+        android:paddingVertical="10dp">
 
         <ImageButton
+            android:id="@+id/photoPickerButton"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:background="@android:drawable/ic_menu_gallery"
+            android:layout_gravity="center" />
+
+        <EditText
+            android:id="@+id/messageEditText"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:background="@drawable/edit_text_background"
+            android:hint="Message"
+            android:paddingLeft="10dp" />
+
+        <ImageButton
+            android:id="@+id/sendMessageButton"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:src="@drawable/ic_baseline_send_24"
-            android:background="@drawable/edit_text_background"
             android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/edit_text_background"
             android:paddingLeft="5dp"
-            android:layout_marginLeft="10dp"/>
+            android:src="@drawable/ic_baseline_send_24" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

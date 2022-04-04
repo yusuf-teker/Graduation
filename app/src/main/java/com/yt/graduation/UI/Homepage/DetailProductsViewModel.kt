@@ -7,6 +7,8 @@ import com.yt.graduation.model.Product
 import com.yt.graduation.model.User
 import com.yt.graduation.repository.DetailProductRepository
 import com.yt.graduation.util.FirebaseResultListener
+import com.yt.graduation.util.OnDataReceiveCallback
+import com.yt.graduation.util.OnDataReceivedCallback
 
 class DetailProductsViewModel: ViewModel() {
 
@@ -22,11 +24,14 @@ class DetailProductsViewModel: ViewModel() {
     val productOwnerImage :LiveData<String>
         get() = _productOwnerImage
 
+    private val _productOwnerID = MutableLiveData<String>()
+    val productOwnerID :LiveData<String>
+        get() = _productOwnerID
 
 
     private val repository = DetailProductRepository()
 
-    fun addOrRemoveFavorites(productKey: String){
+    fun addOrRemoveFavorites(productKey: String,firebaseResultListener: FirebaseResultListener){
         repository.addToFavorites(productKey, resultListener = object : FirebaseResultListener {
             override fun onSuccess(isSuccess: Boolean) {
                 _isFavorite.postValue(isSuccess)
@@ -46,10 +51,15 @@ class DetailProductsViewModel: ViewModel() {
             override fun onDataReceived(ownerInfo: ArrayList<String>) {
                 _productOwnerName.postValue(ownerInfo[0])
                 _productOwnerImage.postValue(ownerInfo[1])
+                _productOwnerID.postValue(ownerInfo[2])
             }
 
         })
     }
+
+   /* fun checkIsThereContactWithProductOwner(ownerId: String, callback: OnDataReceivedCallback<String>) {
+        repository.checkIsThereContactWithProductOwner(ownerId,callback)
+    }*/
 
 
 }

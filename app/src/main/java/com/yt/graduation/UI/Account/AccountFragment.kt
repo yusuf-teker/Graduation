@@ -11,7 +11,6 @@ import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.yt.graduation.R
 import com.yt.graduation.UI.Adapters.AccountFragmentAdapter
-import com.yt.graduation.UI.Homepage.MainActivity
 import com.yt.graduation.databinding.FragmentAccountBinding
 
 

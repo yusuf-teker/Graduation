@@ -2,7 +2,6 @@ package com.yt.graduation.UI.Account
 
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.opengl.Visibility
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -20,7 +19,6 @@ import androidx.navigation.fragment.findNavController
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
 import com.yt.graduation.R
-import com.yt.graduation.UI.Homepage.MainActivity
 import com.yt.graduation.databinding.AddProductFragmentBinding
 import com.yt.graduation.model.Product
 import com.yt.graduation.util.FirebaseResultListener

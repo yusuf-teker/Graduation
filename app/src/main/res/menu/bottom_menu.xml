@@ -7,7 +7,7 @@
         android:title="@string/homepage"
         android:menuCategory="secondary" />
     <item
-        android:id="@+id/chatFragment"
+        android:id="@+id/usersFragment"
         android:enabled="true"
         android:icon="@drawable/ic_chat"
         android:title="@string/chat"

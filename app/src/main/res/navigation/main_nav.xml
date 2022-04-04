@@ -23,6 +23,9 @@
         <argument
             android:name="productInformation"
             app:argType="com.yt.graduation.model.Product" />
+        <action
+            android:id="@+id/action_detailProductFragment_to_chatFragment"
+            app:destination="@id/chatFragment" />
     </fragment>
     <fragment
         android:id="@+id/favoriteProductsFragment"
@@ -68,11 +71,9 @@
         tools:layout="@layout/fragment_login">
         <action
             android:id="@+id/action_loginFragment_to_allProductsFragment"
-            app:destination="@id/allProductsFragment" />
-        <action
-            android:id="@+id/action_loginFragment_to_registerFragment"
-            app:destination="@id/registerFragment"
-            />
+            app:destination="@id/allProductsFragment"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
@@ -80,11 +81,10 @@
         android:label="Register"
         tools:layout="@layout/fragment_register">
         <action
-            android:id="@+id/action_registerFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
-        <action
             android:id="@+id/action_registerFragment_to_allProductsFragment"
-            app:destination="@id/allProductsFragment" />
+            app:destination="@id/allProductsFragment"
+            app:popUpTo="@id/registerFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
@@ -93,11 +93,26 @@
         tools:layout="@layout/fragment_register">
         <action
             android:id="@+id/action_settingsFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/main_nav"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/chatFragment"
         android:name="com.yt.graduation.UI.chat.ChatFragment"
         android:label="Chat"
-        tools:layout="@layout/fragment_chat" />
+        tools:layout="@layout/fragment_chat" >
+        <argument
+            android:name="receiverUser"
+            app:argType="com.yt.graduation.model.User" />
+    </fragment>
+    <fragment
+        android:id="@+id/usersFragment"
+        android:name="com.yt.graduation.UI.chat.UsersFragment"
+        android:label="Speeches"
+        tools:layout="@layout/fragment_users">
+        <action
+            android:id="@+id/action_usersFragment_to_chatFragment"
+            app:destination="@id/chatFragment" />
+    </fragment>
 </navigation>

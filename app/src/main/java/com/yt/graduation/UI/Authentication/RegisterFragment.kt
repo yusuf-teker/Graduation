@@ -10,7 +10,6 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.yt.graduation.R
-import com.yt.graduation.UI.Homepage.MainActivity
 import com.yt.graduation.databinding.FragmentRegisterBinding
 import com.yt.graduation.model.User
 import com.yt.graduation.util.Resource
@@ -66,7 +65,7 @@ class RegisterFragment : Fragment() {
     }
 
     private fun goToLogin() {
-        findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
+        findNavController().navigate(R.id.loginFragment)
     }
 
     private fun register() {
@@ -74,6 +73,7 @@ class RegisterFragment : Fragment() {
         binding.apply {
             user.email = registerMail.text.toString()
             user.name = registerName.text.toString()
+                .replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
             //registerProgressBar.visibility= View.VISIBLE
             user.registrationDate = Calendar.getInstance().time.toString()
             user.favoriteProducts = ArrayList<String>()

@@ -20,6 +20,7 @@
         <entry key="..\:/Programming/Graduation/app/src/main/res/drawable/ic_home.xml" value="0.194" />
         <entry key="..\:/Programming/Graduation/app/src/main/res/drawable/ic_launcher_background.xml" value="0.227" />
         <entry key="..\:/Programming/Graduation/app/src/main/res/drawable/ic_settings.xml" value="0.227" />
+        <entry key="..\:/Programming/Graduation/app/src/main/res/drawable/search_background.xml" value="0.3515" />
         <entry key="..\:/Programming/Graduation/app/src/main/res/drawable/spinner_background.xml" value="0.152" />
         <entry key="..\:/Programming/Graduation/app/src/main/res/layout-v28/activity_settings.xml" value="0.25416666666666665" />
         <entry key="..\:/Programming/Graduation/app/src/main/res/layout/activity_account.xml" value="0.264" />
@@ -41,10 +42,12 @@
         <entry key="..\:/Programming/Graduation/app/src/main/res/layout/fragment_register.xml" value="0.33" />
         <entry key="..\:/Programming/Graduation/app/src/main/res/layout/fragment_scrolling.xml" value="0.25416666666666665" />
         <entry key="..\:/Programming/Graduation/app/src/main/res/layout/fragment_settings.xml" value="0.17375886524822695" />
+        <entry key="..\:/Programming/Graduation/app/src/main/res/layout/fragment_users.xml" value="0.5" />
         <entry key="..\:/Programming/Graduation/app/src/main/res/layout/list_item.xml" value="0.1140625" />
-        <entry key="..\:/Programming/Graduation/app/src/main/res/layout/list_item_chat_message.xml" value="0.1" />
+        <entry key="..\:/Programming/Graduation/app/src/main/res/layout/list_item_chat_message.xml" value="0.25" />
         <entry key="..\:/Programming/Graduation/app/src/main/res/layout/list_item_product.xml" value="0.536" />
         <entry key="..\:/Programming/Graduation/app/src/main/res/layout/list_item_spinner.xml" value="0.1" />
+        <entry key="..\:/Programming/Graduation/app/src/main/res/layout/list_item_user.xml" value="0.5" />
         <entry key="..\:/Programming/Graduation/app/src/main/res/layout/product_detail.xml" value="0.25416666666666665" />
         <entry key="..\:/Programming/Graduation/app/src/main/res/layout/spinner_item.xml" value="0.1" />
         <entry key="..\:/Programming/Graduation/app/src/main/res/layout/toolbar.xml" value="0.2" />

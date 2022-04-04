@@ -26,7 +26,7 @@ class ChatAdapter(private var messages: ArrayList<Message>): RecyclerView.Adapte
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentMessage = messages[position]
-        holder.chatMessage.text = currentMessage.messsageContent
+        holder.chatMessage.text = currentMessage.messageText
         holder.timeToSend.text = currentMessage.timeToSend
     }
 

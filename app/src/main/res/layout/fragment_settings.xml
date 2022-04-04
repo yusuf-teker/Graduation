@@ -8,7 +8,7 @@
     tools:context=".UI.Settings.SettingsFragment">
 
     <ImageView
-        android:id="@+id/userImage"
+        android:id="@+id/userImageSettings"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_marginTop="180dp"
@@ -29,7 +29,7 @@
         android:minHeight="48dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userImage"
+        app:layout_constraintTop_toBottomOf="@+id/userImageSettings"
         tools:text="Username" />
 
     <Button

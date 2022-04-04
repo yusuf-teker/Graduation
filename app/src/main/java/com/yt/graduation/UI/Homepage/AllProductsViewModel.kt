@@ -18,6 +18,9 @@ class AllProductsViewModel: ViewModel() {
     val productList: LiveData<ArrayList<Product>>
         get() = _productList
 
+    private var _signStatus = MutableLiveData<Boolean>()
+    val signStatus: LiveData<Boolean>
+        get() = _signStatus
 
     fun refreshProducts(){
         viewModelScope.launch {
@@ -27,5 +30,9 @@ class AllProductsViewModel: ViewModel() {
                 }
             })
         }
+    }
+
+    fun isSigned(){
+        _signStatus.postValue(repository.auth.currentUser!=null)
     }
 }

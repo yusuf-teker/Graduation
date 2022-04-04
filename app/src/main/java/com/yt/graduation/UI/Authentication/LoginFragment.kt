@@ -9,7 +9,6 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.yt.graduation.R
-import com.yt.graduation.UI.Homepage.MainActivity
 import com.yt.graduation.databinding.FragmentLoginBinding
 import com.yt.graduation.util.Resource
 
@@ -58,7 +57,7 @@ class LoginFragment : Fragment() {
     }
 
     private fun goToRegister() {
-       findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
+       findNavController().navigate(R.id.registerFragment)
     }
     private fun goToMain() {
         findNavController().navigate(R.id.action_loginFragment_to_allProductsFragment)

@@ -16,7 +16,7 @@
         android:theme="@style/Theme.Graduation">
 
         <activity
-            android:name=".UI.Homepage.MainActivity"
+            android:name=".main.MainActivity"
             android:configChanges="orientation"
             android:exported="true"
             android:screenOrientation="portrait"

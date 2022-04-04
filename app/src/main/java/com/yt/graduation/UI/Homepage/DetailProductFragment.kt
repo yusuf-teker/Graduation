@@ -7,12 +7,19 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.yt.graduation.R
+import com.yt.graduation.UI.chat.UsersFragmentDirections
 import com.yt.graduation.databinding.FragmentDetailProductBinding
 import com.yt.graduation.model.Product
+import com.yt.graduation.model.User
+import com.yt.graduation.util.FirebaseResultListener
+import com.yt.graduation.util.OnDataReceivedCallback
 import java.text.NumberFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 class DetailProductFragment : Fragment() {
@@ -76,13 +83,23 @@ class DetailProductFragment : Fragment() {
             }else{
                 binding.ownerImage.setImageResource(R.drawable.defaultuser)
             }
-
-
         }
 
 
         binding.favoriteButton.setOnClickListener {
-            viewModel.addOrRemoveFavorites(productKey = receivedProductInformations!!.productKey.toString())
+            viewModel.addOrRemoveFavorites(productKey = receivedProductInformations!!.productKey.toString(), firebaseResultListener = object : FirebaseResultListener{
+                override fun onSuccess(isSuccess: Boolean) {
+                    Toast.makeText(context, receivedProductInformations!!.productName+" added successfully",Toast.LENGTH_SHORT).show()
+                }
+
+            })
+        }
+
+        binding.ownerImage.setOnClickListener{
+            goToOwnerChat()
+        }
+        binding.ownerName.setOnClickListener{
+            goToOwnerChat()
         }
 
 
@@ -100,4 +117,14 @@ class DetailProductFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+    private fun goToOwnerChat() {
+        val user = User()
+        user.image = viewModel.productOwnerImage.value.toString()
+        user.name = viewModel.productOwnerName.value.toString()
+        user.uid = viewModel.productOwnerID.value.toString()
+
+        val action = DetailProductFragmentDirections.actionDetailProductFragmentToChatFragment(user)
+        findNavController().navigate(action)
+    }
+
 }

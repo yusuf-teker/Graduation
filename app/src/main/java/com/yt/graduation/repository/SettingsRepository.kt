@@ -15,6 +15,8 @@ import com.yt.graduation.UI.Settings.SettingsFragment
 import com.yt.graduation.model.User
 import com.yt.graduation.util.FirebaseResultListener
 import com.yt.graduation.util.OnDataReceiveCallback
+import java.util.*
+import kotlin.collections.HashMap
 import kotlin.coroutines.coroutineContext
 
 
@@ -71,7 +73,8 @@ class SettingsRepository {
                 if (task.isSuccessful) {
                     val downloadUri = task.result // Create HTTP link
                     val userUpdateMap = HashMap<String, Any>()
-                    userUpdateMap["name"] = user.name
+                    userUpdateMap["name"] = user.name.replaceFirstChar { if (it.isLowerCase()) it.titlecase(
+                        Locale.getDefault()) else it.toString() }
                     userUpdateMap["image"] = downloadUri.toString()
 
 

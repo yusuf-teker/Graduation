@@ -43,12 +43,12 @@ class SettingsFragment : Fragment() {
             override fun onDataReceived(display_name: String, photo: String) {
                 binding.settingsUserName.setText(display_name)
                 if (photo=="default" || photo.isEmpty()){ //if user didn't add a profile photo
-                    binding.userImage.setBackgroundResource(R.drawable.defaultuser)
+                    binding.userImageSettings.setBackgroundResource(R.drawable.defaultuser)
                 }else{
                     activity?.let {
                         Glide.with(it)
                             .load(photo) // image url
-                            .into(binding.userImage)
+                            .into(binding.userImageSettings)
                     }
                 }
             }
@@ -56,7 +56,7 @@ class SettingsFragment : Fragment() {
 
         binding.signOutButton.setOnClickListener{ signOut() }
 
-        binding.userImage.setOnClickListener {
+        binding.userImageSettings.setOnClickListener {
             if (activity?.let { it1 ->
                     ContextCompat.checkSelfPermission(
                         it1,
@@ -112,7 +112,7 @@ class SettingsFragment : Fragment() {
             val result = CropImage.getActivityResult(data)
             if (resultCode == AppCompatActivity.RESULT_OK) { //Image Cropped And Returned Successfully
                 imageUri = result.uri
-                binding.userImage.setImageURI(imageUri)
+                binding.userImageSettings.setImageURI(imageUri)
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 result.error
             }
@@ -120,7 +120,7 @@ class SettingsFragment : Fragment() {
     }
 
     private fun goToLogin() {
-        findNavController().navigate(R.id.action_settingsFragment_to_loginFragment)
+        findNavController().navigate(R.id.loginFragment)
     }
     
 }
