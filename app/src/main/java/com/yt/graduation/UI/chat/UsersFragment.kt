@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.yt.graduation.UI.Adapters.UsersAdapter
 import com.yt.graduation.databinding.FragmentUsersBinding
+import com.yt.graduation.main.MainActivity
 import com.yt.graduation.model.User
 
 private lateinit var recyclerView: RecyclerView
@@ -30,6 +31,7 @@ class UsersFragment : Fragment() {
 
         //TODO deprecated
         requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+
 
         viewModel = ViewModelProvider(this).get(UsersViewModel::class.java)
         recyclerView = binding.recyclerView

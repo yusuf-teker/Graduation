@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/gray"
+    android:background="@color/transparent"
     android:layout_margin="5dp">
 
     <de.hdodenhof.circleimageview.CircleImageView
@@ -24,7 +24,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
-        android:text="TextView"
+       tools:text="TextView"
+        android:textColor="@color/white"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/userImage"
         app:layout_constraintStart_toEndOf="@+id/userImage"

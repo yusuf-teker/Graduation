@@ -20,6 +20,7 @@ class ChatViewModel: ViewModel() {
     val user : LiveData<User>
         get() = _user
 
+
     private var _chatUID = MutableLiveData<String>()
     val chatUID : LiveData<String>
         get() = _chatUID

@@ -27,6 +27,7 @@ import com.google.firebase.storage.UploadTask
 import com.yt.graduation.R
 import com.yt.graduation.UI.Adapters.ChatAdapter
 import com.yt.graduation.databinding.FragmentChatBinding
+import com.yt.graduation.main.MainActivity
 import com.yt.graduation.main.auth
 import com.yt.graduation.model.Message
 import com.yt.graduation.model.User
@@ -51,7 +52,6 @@ class ChatFragment : Fragment() {
         super.onCreate(savedInstanceState)
         //TODO deprecated
         requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
-
         viewModel  = ViewModelProvider(this).get(ChatViewModel::class.java)
         if (arguments != null) {
             receiverUser = arguments?.getParcelable("receiverUser")!!
@@ -84,7 +84,7 @@ class ChatFragment : Fragment() {
         /* Recycler View And Adapter --------------------------*/
         recyclerView = binding.recyclerView
         recyclerView.layoutManager = LinearLayoutManager(context)
-        var adapter = ChatAdapter(ArrayList<Message>())
+        var adapter = ChatAdapter(ArrayList<Message>(),receiverUser.uid,requireContext())
         recyclerView.adapter = adapter /* ---------------------*/
 
         //Observe messages
@@ -141,6 +141,13 @@ class ChatFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         viewModel.refreshMessages(receiverUser.uid)
+        (requireActivity() as MainActivity).supportActionBar!!.hide()
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        (requireActivity() as MainActivity).supportActionBar!!.show()
+
     }
 
 

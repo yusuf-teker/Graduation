@@ -13,12 +13,12 @@
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:background="@color/gray">
+        android:background="@color/messageSenderBackgroundColor">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/receiverUserImage"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:src="@drawable/defaultuser"
             android:layout_margin="10dp"/>
         <TextView
@@ -39,8 +39,7 @@
         android:layout_height="0dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 
     <LinearLayout

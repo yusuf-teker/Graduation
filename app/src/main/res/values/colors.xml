@@ -22,6 +22,8 @@
     <color name="darkGray">#AB3C3C3C</color>
     <color name="transparent">#00FFFFFF</color>
 
+    <color name="messageSenderBackgroundColor">#AB7A7878</color>
+    <color name="messageReceiverBackgroundColor">#81C784</color>
 
 
 </resources>
