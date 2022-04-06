@@ -14,7 +14,7 @@
         android:id="@+id/productImage"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="fitXY"
+
         tools:srcCompat="@tools:sample/avatars"
         android:contentDescription="@string/product_image" />
 

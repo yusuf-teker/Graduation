@@ -4,9 +4,12 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.net.Uri
+import android.opengl.Visibility
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -37,6 +40,11 @@ class SettingsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentSettingsBinding.inflate(inflater, container, false)
+
+        viewModel.updatingStatus.observe(viewLifecycleOwner){
+            if (it) binding.progressBar.visibility = VISIBLE
+            else binding.progressBar.visibility = GONE
+        }
 
         //Get User From Database and update UI
         user = viewModel.getUser(object : OnDataReceiveCallback {
@@ -92,11 +100,7 @@ class SettingsFragment : Fragment() {
     private fun updateDB() {
         user.name = binding.settingsUserName.text.toString()
         user.image = imageUri.toString()
-        viewModel.setUser(user, resultListener = object : FirebaseResultListener {
-            override fun onSuccess(isSuccess: Boolean) {
-                Toast.makeText(context, "Update process is finished successfully", Toast.LENGTH_SHORT).show()
-            }
-        })
+        viewModel.setUser(user)
     }
 
 

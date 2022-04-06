@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UI.chat.ChatFragment">
+    tools:context=".UI.chat.ChatFragment"
+    android:background="@drawable/chat_background">
 
 
     <LinearLayout
@@ -13,7 +14,17 @@
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:background="@color/messageSenderBackgroundColor">
+        android:background="@color/primaryDarkColor">
+
+        <ImageButton
+            android:id="@+id/navigateUpButton"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:padding="48dp"
+            android:background="@drawable/ic_baseline_arrow_back_24"
+            android:layout_gravity="center">
+
+        </ImageButton>
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/receiverUserImage"
@@ -29,7 +40,7 @@
             android:gravity="center"
             android:layout_gravity="center"
             tools:text="ReceiverName"
-            android:textColor="@color/black"/>
+            android:textColor="@color/primaryTextColor"/>
     </LinearLayout>
 
 
@@ -38,45 +49,67 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintBottom_toTopOf="@+id/rootLL"
         app:layout_constraintStart_toStartOf="parent" />
 
-
     <LinearLayout
-        android:id="@+id/linearLayout"
+        android:id="@+id/rootLL"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:paddingVertical="10dp">
+        app:layout_constraintStart_toStartOf="parent"
+        android:orientation="horizontal"
+        android:background="@color/transparent"
+        android:layout_margin="5dp">
 
-        <ImageButton
-            android:id="@+id/photoPickerButton"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:background="@android:drawable/ic_menu_gallery"
-            android:layout_gravity="center" />
-
-        <EditText
-            android:id="@+id/messageEditText"
+        <LinearLayout
+            android:id="@+id/linearLayout"
             android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:layout_gravity="center"
             android:layout_weight="1"
-            android:background="@drawable/edit_text_background"
-            android:hint="Message"
-            android:paddingLeft="10dp" />
+            android:layout_height="wrap_content"
+            android:background="@drawable/edit_text_send_message_background"
+            android:paddingHorizontal="4dp"
+            android:orientation="horizontal"
+            android:paddingVertical="5dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
 
+            <ImageButton
+                android:id="@+id/photoPickerButton"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_gravity="center"
+                android:background="@android:drawable/ic_menu_gallery"
+                android:layout_marginLeft="5dp"/>
+
+            <EditText
+                android:id="@+id/messageEditText"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_gravity="center"
+                android:textColor="@color/gray"
+                android:textColorHint="@color/gray"
+                android:background="@color/transparent"
+                android:hint="Message"
+                android:paddingStart="10dp" />
+
+
+        </LinearLayout>
         <ImageButton
             android:id="@+id/sendMessageButton"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_gravity="center"
-            android:layout_marginLeft="10dp"
-            android:background="@drawable/edit_text_background"
-            android:paddingLeft="5dp"
-            android:src="@drawable/ic_baseline_send_24" />
+            android:background="@drawable/edit_text_send_message_background"
+            android:paddingStart="5dp"
+            android:layout_marginStart="5dp"
+            android:src="@drawable/ic_baseline_send_24"
+/>
     </LinearLayout>
+
+
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

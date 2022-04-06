@@ -1,17 +1,18 @@
 package com.yt.graduation.UI.chat
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.yt.graduation.UI.Adapters.UsersAdapter
 import com.yt.graduation.databinding.FragmentUsersBinding
-import com.yt.graduation.main.MainActivity
 import com.yt.graduation.model.User
 
 private lateinit var recyclerView: RecyclerView
@@ -42,6 +43,20 @@ class UsersFragment : Fragment() {
         viewModel.usersList.observe(viewLifecycleOwner){
             adapter.refreshData(it)
         }
+        binding.searchUserText.addTextChangedListener(object : TextWatcher{
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                //
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                //
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+                //
+            }
+
+        })
 
         return binding.root
     }

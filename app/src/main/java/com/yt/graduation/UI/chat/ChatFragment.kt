@@ -14,6 +14,7 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -132,6 +133,9 @@ class ChatFragment : Fragment() {
 
         }
 
+        binding.navigateUpButton.setOnClickListener{
+            it.findNavController().navigateUp()
+        }
 
 
 
@@ -142,6 +146,7 @@ class ChatFragment : Fragment() {
         super.onResume()
         viewModel.refreshMessages(receiverUser.uid)
         (requireActivity() as MainActivity).supportActionBar!!.hide()
+        binding.messageEditText.requestFocus()
     }
 
     override fun onDetach() {
