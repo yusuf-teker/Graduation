@@ -2,6 +2,7 @@ package com.yt.graduation.UI.Adapters
 
 
 import android.content.Context
+import android.graphics.drawable.GradientDrawable
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -35,6 +36,15 @@ class ChatAdapter(private var messages: ArrayList<Message>,private val receiverI
         val message = messages[position]
         holder.chatMessage.text = message.messageText
         holder.timeToSend.text = context.resources.getString(R.string.messageSendTime,message.timeToSend.subSequence(11,16),message.timeToSend.subSequence(5,7),message.timeToSend.subSequence(8,10))//LocalTime olarak geliyor
+
+
+        /*  todo fix time text with a convenient way*/
+        if (holder.chatMessage.text.length>25){
+            holder.messageRootLL.orientation = LinearLayout.VERTICAL
+        }else{
+            holder.messageRootLL.orientation = LinearLayout.HORIZONTAL
+        }
+
         if (message.senderId == receiverID){
             holder.messageRootLL.setBackgroundResource(R.drawable.message_background_receiver)
             holder.justifyRight.visibility = View.GONE
