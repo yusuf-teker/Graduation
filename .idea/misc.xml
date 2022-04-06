@@ -38,7 +38,7 @@
         <entry key="..\:/Programming/Graduation/app/src/main/res/layout/fragment_account.xml" value="0.33" />
         <entry key="..\:/Programming/Graduation/app/src/main/res/layout/fragment_all_products.xml" value="0.17617753623188406" />
         <entry key="..\:/Programming/Graduation/app/src/main/res/layout/fragment_blank.xml" value="0.4" />
-        <entry key="..\:/Programming/Graduation/app/src/main/res/layout/fragment_chat.xml" value="0.1" />
+        <entry key="..\:/Programming/Graduation/app/src/main/res/layout/fragment_chat.xml" value="0.15" />
         <entry key="..\:/Programming/Graduation/app/src/main/res/layout/fragment_detail_product.xml" value="0.43737166324435317" />
         <entry key="..\:/Programming/Graduation/app/src/main/res/layout/fragment_favorite_products.xml" value="0.25416666666666665" />
         <entry key="..\:/Programming/Graduation/app/src/main/res/layout/fragment_login.xml" value="0.1" />
@@ -48,7 +48,7 @@
         <entry key="..\:/Programming/Graduation/app/src/main/res/layout/fragment_settings.xml" value="0.17375886524822695" />
         <entry key="..\:/Programming/Graduation/app/src/main/res/layout/fragment_users.xml" value="0.2928709055876686" />
         <entry key="..\:/Programming/Graduation/app/src/main/res/layout/list_item.xml" value="0.1140625" />
-        <entry key="..\:/Programming/Graduation/app/src/main/res/layout/list_item_chat_message.xml" value="0.25" />
+        <entry key="..\:/Programming/Graduation/app/src/main/res/layout/list_item_chat_message.xml" value="0.33" />
         <entry key="..\:/Programming/Graduation/app/src/main/res/layout/list_item_product.xml" value="0.536" />
         <entry key="..\:/Programming/Graduation/app/src/main/res/layout/list_item_spinner.xml" value="0.1" />
         <entry key="..\:/Programming/Graduation/app/src/main/res/layout/list_item_user.xml" value="0.5" />
