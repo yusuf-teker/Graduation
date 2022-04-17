@@ -91,6 +91,7 @@ class ChatFragment : Fragment() {
         //Observe messages
         viewModel.messages.observe(viewLifecycleOwner){
             adapter.refreshMessages(it)
+            recyclerView.scrollToPosition(adapter.itemCount-1)
         }
 
 
@@ -117,6 +118,9 @@ class ChatFragment : Fragment() {
             startForResult.launch(Intent.createChooser(intent, "Complete action using"))
         } /*----------------------------------------------------------------------------------------*/
 
+        binding.messageEditText.setOnClickListener{
+            recyclerView.scrollToPosition(adapter.itemCount-1)
+        }
 
         // Send new messages
         binding.sendMessageButton.setOnClickListener{
@@ -130,6 +134,7 @@ class ChatFragment : Fragment() {
 
             binding.messageEditText.text.clear()
             viewModel.sendMessage(message)
+
 
         }
 
