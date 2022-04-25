@@ -20,7 +20,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.firebase.auth.FirebaseAuth
 import com.yt.graduation.R
 import com.yt.graduation.databinding.ActivityMainBinding
-
+import android.view.MenuInflater
 
 private lateinit var binding: ActivityMainBinding
 
@@ -31,6 +31,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
+
         setContentView(binding.root)
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         viewModel.isSigned()
@@ -41,6 +42,7 @@ class MainActivity : AppCompatActivity() {
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
         navController = navHostFragment.findNavController()
         binding.bottomNavigation.setupWithNavController(navController)
+
         val appBarConfiguration = AppBarConfiguration(setOf(R.id.allProductsFragment,R.id.usersFragment, R.id.accountFragment,R.id.loginFragment,R.id.registerFragment))
 
 
@@ -48,19 +50,14 @@ class MainActivity : AppCompatActivity() {
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             viewModel.isSigned()
-            if(destination.id == R.id.loginFragment || destination.id == R.id.registerFragment || destination.id == R.id.chatFragment) {
+            if(destination.id == R.id.loginFragment || destination.id == R.id.registerFragment || destination.id == R.id.chatFragment || destination.id == R.id.wallpaperFragment) {
                 binding.bottomNavigation.visibility = View.GONE
             } else {
 
                 binding.bottomNavigation.visibility = View.VISIBLE
             }
         }
-    /*    viewModel.signStatus.observe(this){
-                 if (!it){
-                     Log.d("aa","aaaaaaaa")
-                     navController.navigate(R.id.loginFragment)
-                 }
-        }*/
+
 
 
 
@@ -79,6 +76,9 @@ class MainActivity : AppCompatActivity() {
         super.onOptionsItemSelected(item)
         if (item.itemId == R.id.actionSettings) {
             findNavController(R.id.fragmentContainerView).navigate(R.id.settingsFragment)
+        }
+        else if (item.itemId == R.id.actionChangeWallpaper) {
+            findNavController(R.id.fragmentContainerView).navigate(R.id.wallpaperFragment)
         }
         return true
     }

@@ -48,7 +48,10 @@
 
 
     <string name="messageSendTime">%s    %s.%s</string>
-
+    <string name="change_background">Change Background</string>
+    <string name="change_wallpaper">Change Wallpaper</string>
+    <string name="wallpaper">Wallpaper</string>
+    <string name="default_wallpaper">Default Wallpaper</string>
 
 
 </resources>

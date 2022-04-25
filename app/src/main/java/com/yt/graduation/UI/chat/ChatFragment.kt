@@ -1,43 +1,29 @@
 package com.yt.graduation.UI.chat
 
 import android.app.Activity
-import android.content.BroadcastReceiver
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.view.WindowManager
+import android.view.*
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.google.android.gms.tasks.OnSuccessListener
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
-import com.google.firebase.storage.UploadTask
 import com.yt.graduation.R
 import com.yt.graduation.UI.Adapters.ChatAdapter
+import com.yt.graduation.data.SettingsDataStore
 import com.yt.graduation.databinding.FragmentChatBinding
 import com.yt.graduation.main.MainActivity
-import com.yt.graduation.main.auth
 import com.yt.graduation.model.Message
 import com.yt.graduation.model.User
 import java.time.LocalDateTime
 import java.util.*
-import kotlin.collections.ArrayList
-
-
-private const val RC_PHOTO_PICKER = 2
 
 class ChatFragment : Fragment() {
     private var _binding: FragmentChatBinding? = null
@@ -51,6 +37,7 @@ class ChatFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         //TODO deprecated
         requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
         viewModel  = ViewModelProvider(this).get(ChatViewModel::class.java)
@@ -69,7 +56,7 @@ class ChatFragment : Fragment() {
 
         /* bind Choosen User Information-------------------------------------*/
         if (receiverUser.image.isEmpty() || receiverUser.image=="default"){
-            binding.receiverUserImage.setImageResource(R.drawable.defaultuser)
+            binding.receiverUserImage.setImageResource(com.yt.graduation.R.drawable.defaultuser)
         }else{
             Glide.with(requireContext())
                 .load(receiverUser.image) // image url
@@ -102,7 +89,7 @@ class ChatFragment : Fragment() {
             if (result.resultCode == Activity.RESULT_OK) {
                 val intent = result.data
                 selectedImageUri = intent?.data
-                Log.d("chat intet.data",selectedImageUri.toString())
+                Log.d("chat setImageURI",selectedImageUri.toString())
 
             /*    val photoRef: StorageReference = mChatPhotosStorageReference!!.child(
                     selectedImageUri!!.lastPathSegment!!
@@ -142,7 +129,13 @@ class ChatFragment : Fragment() {
             it.findNavController().navigateUp()
         }
 
-
+        viewModel.wallpaper.observe(viewLifecycleOwner){
+            if (it!="default" && it.isNotBlank()){
+                binding.backgroundImage.setImageURI(it.toUri())
+            }else{
+                binding.backgroundImage.setImageResource(R.drawable.chat_background)
+            }
+        }
 
         return binding.root
     }
@@ -161,13 +154,7 @@ class ChatFragment : Fragment() {
     }
 
 
-
-
-
-
-
-
-
-
 }
+
+
 

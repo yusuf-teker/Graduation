@@ -1,15 +1,20 @@
 package com.yt.graduation.UI.chat
 
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import android.app.Application
+import androidx.lifecycle.*
+import com.yt.graduation.data.SettingsDataStore
 import com.yt.graduation.model.Message
 import com.yt.graduation.model.User
 import com.yt.graduation.repository.ChatRepository
 import com.yt.graduation.util.OnDataReceivedCallback
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
-class ChatViewModel: ViewModel() {
+class ChatViewModel(application: Application)  : AndroidViewModel(application)  {
+
+
+    private var SettingsDataStore: SettingsDataStore = SettingsDataStore(getApplication<Application>().applicationContext)
 
     private var _messages = MutableLiveData<ArrayList<Message>>()
     val messages : LiveData<ArrayList<Message>>
@@ -25,13 +30,24 @@ class ChatViewModel: ViewModel() {
     val chatUID : LiveData<String>
         get() = _chatUID
 
-//    fun  setChatUID(chatUID: String){
-//        _chatUID.postValue(chatUID)
-//    }
+    private val _wallpaper = MutableLiveData<String>()
+    val wallpaper : LiveData<String>
+        get() = _wallpaper
 
     private val repository = ChatRepository()
 
+    init {
+        getWallpaper()
+    }
 
+    private fun getWallpaper(){
+        viewModelScope.launch {
+            SettingsDataStore.preferenceFlow.collectLatest {
+                _wallpaper.value = it
+            }
+        }
+
+    }
 
     fun refreshMessages(productOwnerId:String){
 

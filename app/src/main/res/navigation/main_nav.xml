@@ -90,7 +90,7 @@
         android:id="@+id/settingsFragment"
         android:name="com.yt.graduation.UI.Settings.SettingsFragment"
         android:label="SettingsFragment"
-        tools:layout="@layout/fragment_register">
+        tools:layout="@layout/fragment_settings">
         <action
             android:id="@+id/action_settingsFragment_to_loginFragment"
             app:destination="@id/loginFragment"
@@ -115,4 +115,10 @@
             android:id="@+id/action_usersFragment_to_chatFragment"
             app:destination="@id/chatFragment" />
     </fragment>
+    <fragment
+
+        android:id="@+id/wallpaperFragment"
+        android:name="com.yt.graduation.UI.Settings.WallpaperFragment"
+        android:label="Preview"
+        tools:layout="@layout/fragment_wallpaper"/>
 </navigation>
