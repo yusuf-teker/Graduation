@@ -35,11 +35,7 @@ class UsersViewModel(application: Application)   : AndroidViewModel(application)
     }*/
 
     fun refreshSpeeches(){
-//        repository.getSpeeches(callback = object :  UsersRepository.OnDataReceiveCallback<User>{
-//            override fun onDataReceived(users: ArrayList<User>) {
-//                _usersList.postValue(users)
-//            }
-//        })
+
         repository.getUsersWithContact(object :UsersRepository.OnDataReceiveCallback<User>{
             override fun onDataReceived(users: ArrayList<User>) {
                 _usersList.postValue(users)

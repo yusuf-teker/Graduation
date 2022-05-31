@@ -7,6 +7,18 @@
     android:layout_height="match_parent"
         tools:context=".UI.Authentication.LoginFragment">
 
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="96dp"
+        android:text="ITU SPOT LOGIN"
+        android:textColor="@color/primaryColor"
+        android:textSize="34sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <EditText
         android:id="@+id/loginMail"
         android:layout_width="0dp"
